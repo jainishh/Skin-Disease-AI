@@ -1,0 +1,1380 @@
+[
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/91fba5159cd44d53a40277c0233b8e3d.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/7322e85273f942a29da55dd2286419ee.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.9763
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0101
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0136
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.9763,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [],
+    "created_at": "2026-06-26T09:43:50.634387+00:00",
+    "_id": "6a3e49d63b5c4af8baea619a"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/78079623cc3d4f3990b80177932eb052.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/4bb91623a91e40598ca7f16ff3007dbc.jpg",
+    "top_predictions": [
+      {
+        "disease": "Warts_Viral_Infections",
+        "title": "Warts, Molluscum & Other Viral Infections",
+        "confidence": 0.9439
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.0239
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.0322
+      }
+    ],
+    "primary_disease": "Warts_Viral_Infections",
+    "confidence": 0.9439,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [],
+    "created_at": "2026-06-26T09:44:38.377120+00:00",
+    "_id": "6a3e4a063b5c4af8baea619b"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/3aaaee19d937452f8bc747c330f54675.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/8f93e4c44320426a95faced6a77166bd.jpg",
+    "top_predictions": [
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.9139
+      },
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.0596
+      },
+      {
+        "disease": "Warts_Viral_Infections",
+        "title": "Warts, Molluscum & Other Viral Infections",
+        "confidence": 0.0265
+      }
+    ],
+    "primary_disease": "Eczema",
+    "confidence": 0.9139,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [],
+    "created_at": "2026-06-26T09:45:20.708588+00:00",
+    "_id": "6a3e4a303b5c4af8baea619c"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/10b38c91a1154f94b3027491111906e5.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/ee4fa6beed424b0bb5d1488d336745a6.jpg",
+    "top_predictions": [
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.9468
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.0368
+      },
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.0164
+      }
+    ],
+    "primary_disease": "Benign_Keratosis",
+    "confidence": 0.9468,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [
+      "Image appears blurry. Please retake with a steady hand and good focus."
+    ],
+    "created_at": "2026-06-26T09:47:37.493535+00:00",
+    "_id": "6a3e4ab93b5c4af8baea619d"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/cb7c28576fe64a029482e153a09ad203.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/3fd342b0e7704de394e599a4f29e190f.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8794
+      },
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.0506
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.07
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8794,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [
+      "Image appears blurry. Please retake with a steady hand and good focus."
+    ],
+    "created_at": "2026-06-26T09:48:33.953871+00:00",
+    "_id": "6a3e4af13b5c4af8baea619e"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/384da2fae1da4c2299c7f8032f696009.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/86e8835cedaf4adaa894a6993c8c30a1.jpg",
+    "top_predictions": [
+      {
+        "disease": "Warts_Viral_Infections",
+        "title": "Warts, Molluscum & Other Viral Infections",
+        "confidence": 0.8553
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0649
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.0798
+      }
+    ],
+    "primary_disease": "Warts_Viral_Infections",
+    "confidence": 0.8553,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [
+      "Image appears blurry. Please retake with a steady hand and good focus."
+    ],
+    "created_at": "2026-06-26T09:49:16.092837+00:00",
+    "_id": "6a3e4b1c3b5c4af8baea619f"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/37c74fc1fefa49c8a226f435a2a7310b.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/b7a17cb22b3a4e5d916e415536e76f51.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8554
+      },
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.1002
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.0444
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8554,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [],
+    "created_at": "2026-06-26T10:16:55.795158+00:00",
+    "_id": "6a3e519778350226fb921b30"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/29b64c571e8b411e9adc89706769a52c.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/abf705ec74f54627b5b4d5b79996a56e.jpg",
+    "top_predictions": [
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.9553
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.0265
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.0182
+      }
+    ],
+    "primary_disease": "Psoriasis_Lichen_Planus",
+    "confidence": 0.9553,
+    "severity": "Mild",
+    "inference_mode": "mock",
+    "image_quality_warnings": [],
+    "created_at": "2026-06-26T10:18:10.702826+00:00",
+    "_id": "6a3e51e278350226fb921b31"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/88e2b59010e549e7882b2863667236bf.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/12cf0245b53f4a719eb3484e6f900fb1.jpg",
+    "top_predictions": [
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.9401
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.0312
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0287
+      }
+    ],
+    "primary_disease": "Benign_Keratosis",
+    "confidence": 0.9401,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-05T10:04:41.058520+00:00",
+    "_id": "6a4a2c39d3628241a6c86377"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/162a1972f0cf466f8aa4d956642e5c63.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/4e9d2b53269642aebae8f634035255b0.jpg",
+    "top_predictions": [
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.9126
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.0569
+      },
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.0305
+      }
+    ],
+    "primary_disease": "Eczema",
+    "confidence": 0.9126,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-05T10:04:47.157544+00:00",
+    "_id": "6a4a2c3fd3628241a6c86378"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/16e8dfb73d3b42d8903279723413f893.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/3cbfc328190e4e1b9e27ad8da4229b2a.jpg",
+    "top_predictions": [
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.8984
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0675
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.0341
+      }
+    ],
+    "primary_disease": "Eczema",
+    "confidence": 0.8984,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-07T14:45:11.644355+00:00",
+    "_id": "6a4d10f73530aaf7de166f18"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/d489d50bbc3d4eb08b6f67f94a4177fd.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/84121e128f1845dc9b138d78a2bb1314.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.9183
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0378
+      },
+      {
+        "disease": "Warts_Viral_Infections",
+        "title": "Warts, Molluscum & Other Viral Infections",
+        "confidence": 0.0439
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.9183,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image appears blurry. Please retake with a steady hand and good focus."
+    ],
+    "created_at": "2026-07-07T14:46:45.000993+00:00",
+    "_id": "6a4d11553530aaf7de166f19"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/a9ba4aea9aab4904a19d90da6c6f6ca1.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/dc482a47b8804c0e8d2f3e23a12d7826.jpg",
+    "top_predictions": [
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.9329
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0384
+      },
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.0287
+      }
+    ],
+    "primary_disease": "Eczema",
+    "confidence": 0.9329,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-07T14:50:00.657055+00:00",
+    "_id": "6a4d12183530aaf7de166f1a"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/6f7decef523e49698f0f34526e8f6e3f.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/b8795c3758cd4c0f808bcb8db5b44745.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.9397
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0248
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0355
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.9397,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-07T14:51:57.028765+00:00",
+    "_id": "6a4d128d3530aaf7de166f1b"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/de97a1f2864f4a029874dc4190b2621e.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/74891e2d555e4a1bbec52e166767633b.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.885
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0753
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0397
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.885,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-07T15:23:35.381150+00:00",
+    "_id": "6a4d19f7deb581c085f3a345"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/5fa7000a7d4743fcac1b4e64892f66b8.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/68c5a83c54ca49b29c9b35b39492b986.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.964
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0151
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0209
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.964,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-07T15:23:43.677238+00:00",
+    "_id": "6a4d19ffdeb581c085f3a346"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/d562698db6be48b4a2098e0a81b7df61.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/7b10b12d27e14efba317c90ab4616ab3.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8894
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0675
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0431
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8894,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-07T15:23:50.845076+00:00",
+    "_id": "6a4d1a06deb581c085f3a347"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/ce3c6fc7abb14b0bbc5f031c401f9f7f.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/33887d20a39e414fbc24adc92f66db6f.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8976
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.045
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0574
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8976,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-18T03:29:04.258793+00:00",
+    "_id": "6a5af300bef8241d482c44dd"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/23ed1b3b64d14879a1a0fdb1ed239393.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/a7d8776cd4194cf5b759cca4d7442757.jpg",
+    "top_predictions": [
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.8806
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.0554
+      },
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.064
+      }
+    ],
+    "primary_disease": "Melanocytic_Nevi",
+    "confidence": 0.8806,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-18T03:34:55.148906+00:00",
+    "_id": "6a5af45fbef8241d482c44de"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/822e4413bc894e8c8ca1c8bb59cc5c25.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/303a62da299d46048aad698f41fc4b3a.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.901
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0596
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0394
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.901,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-18T03:53:49.403363+00:00",
+    "_id": "6a5af8cd7315b2cf51c83e60"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/b165517125854b0d8dcab2b8812e3127.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/5ae6a534eaa9470e859df8130d727df7.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8634
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0585
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0781
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8634,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-18T04:35:53.565854+00:00",
+    "_id": "6a5b02a97315b2cf51c83e61"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/2b541dd2a9674c638b32d0b9511e8eda.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/40dfdd9066c3471d80d76a976e862ef3.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8784
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0624
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0592
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8784,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-18T04:36:20.988996+00:00",
+    "_id": "6a5b02c47315b2cf51c83e62"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/578712476fe44cbab135da3e702651a5.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/e22b9d939d93486ba4b2e325c03904aa.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.9319
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0451
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.023
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.9319,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-23T08:38:30.311762+00:00",
+    "_id": "6a61d3068b294c3344238fc4"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/412b718ae960473da33dc17dc12389ab.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/728bc2a68a654d24a93610bca9c7b0ab.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.8572
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.0937
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0491
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.8572,
+    "severity": "Mild",
+    "inference_mode": "model+tta",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-23T08:38:36.066341+00:00",
+    "_id": "6a61d30c8b294c3344238fc5"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/61886c4c519e45a98e992169e2239107.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/f4a9eb9e606b47c585f6bfcad844f398.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.4641
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.2308
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.2292
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.4641,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-23T09:45:37.447995+00:00",
+    "_id": "6a61e2c1aa1fcf7ac4b39ecb"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/e5bf8ad24cf54affb70cf7edf223d824.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/0e3e2ad4227148c4a49c5786436156d2.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.4463
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.4325
+      },
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.0408
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.4463,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-23T09:45:41.769552+00:00",
+    "_id": "6a61e2c5aa1fcf7ac4b39ecc"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/0c1f23b738ce415c82c91305d3b2cec4.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/756bede114c34f78bf4e2c063ed08c5f.jpg",
+    "top_predictions": [
+      {
+        "disease": "Healthy_Skin",
+        "title": "Healthy Skin",
+        "confidence": 0.6969
+      },
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.1361
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.1129
+      }
+    ],
+    "primary_disease": "Healthy_Skin",
+    "confidence": 0.6969,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-07-23T10:22:33.104749+00:00",
+    "_id": "6a61eb69a67db08323330ee1"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/e21bb7e1a16445f39501138454b59c44.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/6007542546944008acd6a7e583b98219.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.5638
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.1811
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.116
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.5638,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-23T10:23:28.234789+00:00",
+    "_id": "6a61eba0a67db08323330ee2"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/99f6024d36c244b9820a37e2548ee56e.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/b0bd20cf83954751ac251e229c300429.jpg",
+    "top_predictions": [
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.4559
+      },
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.1772
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.1447
+      }
+    ],
+    "primary_disease": "Psoriasis_Lichen_Planus",
+    "confidence": 0.4559,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-23T10:24:11.639419+00:00",
+    "_id": "6a61ebcba67db08323330ee3"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/4b07d85a56a54bfbb27b3e9816b81c12.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/a57b96b4463b483f98b4ceb5fa9d6720.jpg",
+    "top_predictions": [
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.4508
+      },
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.3241
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.1048
+      }
+    ],
+    "primary_disease": "Eczema",
+    "confidence": 0.4508,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-07-31T08:13:43.859690+00:00",
+    "_id": "6a6c59378586bf573f0d1177"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/1f0ff3db7b8c4822b921d65f2cdfa833.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/993ca63fd4134240b2a704b7ba48753a.jpg",
+    "top_predictions": [
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.589
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.1076
+      },
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.1034
+      }
+    ],
+    "primary_disease": "Melanocytic_Nevi",
+    "confidence": 0.589,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image appears blurry. Please retake with a steady hand and good focus."
+    ],
+    "created_at": "2026-07-31T08:29:04.259832+00:00",
+    "_id": "6a6c5cd097d64d46b535cfdf"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/13a11160a6b349d793ae381018ba6fae.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/799c480ac37a40c0b1a29fdbc398769a.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.4768
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.2652
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.1283
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.4768,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-08-13T05:07:07.080520+00:00",
+    "_id": "6a7d50fb7200b5b8c01736d8"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/b37a47a43a59474094784f89c17a38a2.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/2c5323426d424367b85d6285aec37be0.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.5161
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.2953
+      },
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.0963
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.5161,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-08-13T05:15:39.137393+00:00",
+    "_id": "6a7d52fb7200b5b8c01736d9"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/0a62fffb65824a03916eeede9b251e2c.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/8591b3c763b4455fb3005e3367859c29.jpg",
+    "top_predictions": [
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.4508
+      },
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.3241
+      },
+      {
+        "disease": "Melanocytic_Nevi",
+        "title": "Melanocytic Nevi (Mole)",
+        "confidence": 0.1048
+      }
+    ],
+    "primary_disease": "Eczema",
+    "confidence": 0.4508,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-08-13T05:16:37.817668+00:00",
+    "_id": "6a7d53357200b5b8c01736da"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/069c4749aa154f60a4055fdb5b136042.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/fb3e76f91e414669a93c15a8b58e8ebb.jpg",
+    "top_predictions": [
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.5168
+      },
+      {
+        "disease": "Healthy_Skin",
+        "title": "Healthy Skin",
+        "confidence": 0.1665
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.1546
+      }
+    ],
+    "primary_disease": "Basal_Cell_Carcinoma",
+    "confidence": 0.5168,
+    "severity": "Severe",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-08-13T05:19:26.079349+00:00",
+    "_id": "6a7d53de7200b5b8c01736db"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/01b6fa9fa38b4e7390bccab983c987fd.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/ef4c003c53bc4278b13adae2775421b8.jpg",
+    "top_predictions": [
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.4493
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.4175
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.0379
+      }
+    ],
+    "primary_disease": "Seborrheic_Keratoses",
+    "confidence": 0.4493,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-08-13T05:21:43.546881+00:00",
+    "_id": "6a7d54677200b5b8c01736dc"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/70238e8733a440919bd0a3b32bc9fe85.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/c6fc684055514f47a76792ea3bd14578.jpg",
+    "top_predictions": [
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.4941
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.3132
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0834
+      }
+    ],
+    "primary_disease": "Psoriasis_Lichen_Planus",
+    "confidence": 0.4941,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-01T07:20:32.935820+00:00",
+    "_id": "6a967cc0f3ed1fc565e06aa2"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/f130b2bf110d4a04b96180123a42f28a.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/4cac2da741ef42ef9cd06dfe8dbd45ba.jpg",
+    "top_predictions": [
+      {
+        "disease": "Healthy_Skin",
+        "title": "Healthy Skin",
+        "confidence": 0.5036
+      },
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.3894
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.0463
+      }
+    ],
+    "primary_disease": "Healthy_Skin",
+    "confidence": 0.5036,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-09-01T07:21:24.924865+00:00",
+    "_id": "6a967cf4f3ed1fc565e06aa3"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/2832816b456e4777894025304e779995.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/522a870a3ea64ac8a2ab31d2a3ae519b.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.5638
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.1811
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.116
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.5638,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-02T15:50:05.995286+00:00",
+    "_id": "6a9845ad058ade402690f1b7"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/560abbd6ab334e28a8bfb69676724dcb.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/ad344b384eb0494ca881f43945ebc26a.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.5638
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.1811
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.116
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.5638,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-02T15:51:22.248536+00:00",
+    "_id": "6a9845fa058ade402690f1b8"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/d1c981127ad94dcda121fa9168d1733a.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/b3482b7f4a7349de8f64524019785437.jpg",
+    "top_predictions": [
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.5425
+      },
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.2156
+      },
+      {
+        "disease": "Warts_Viral_Infections",
+        "title": "Warts, Molluscum & Other Viral Infections",
+        "confidence": 0.1355
+      }
+    ],
+    "primary_disease": "Psoriasis_Lichen_Planus",
+    "confidence": 0.5425,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-03T06:18:11.427604+00:00",
+    "_id": "6a99112315b59c60a2671f75"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/320b7c358132445ea2336e421b6a26d7.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/7090ddcc99d14f7cad0647a2c80cba17.jpg",
+    "top_predictions": [
+      {
+        "disease": "Warts_Viral_Infections",
+        "title": "Warts, Molluscum & Other Viral Infections",
+        "confidence": 0.5144
+      },
+      {
+        "disease": "Psoriasis_Lichen_Planus",
+        "title": "Psoriasis, Lichen Planus & Related Diseases",
+        "confidence": 0.4515
+      },
+      {
+        "disease": "Seborrheic_Keratoses",
+        "title": "Seborrheic Keratoses & Benign Tumors",
+        "confidence": 0.0263
+      }
+    ],
+    "primary_disease": "Warts_Viral_Infections",
+    "confidence": 0.5144,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-03T06:19:09.568257+00:00",
+    "_id": "6a99115d15b59c60a2671f76"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/c1e95851b06643f59f5753561aab8919.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/01bf4ae530de491ab58cce5cacfd03a0.jpg",
+    "top_predictions": [
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.5638
+      },
+      {
+        "disease": "Tinea_Fungal_Infections",
+        "title": "Tinea, Ringworm & Fungal Infections",
+        "confidence": 0.1811
+      },
+      {
+        "disease": "Melanoma",
+        "title": "Melanoma",
+        "confidence": 0.116
+      }
+    ],
+    "primary_disease": "Atopic_Dermatitis",
+    "confidence": 0.5638,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-03T07:33:07.185645+00:00",
+    "_id": "6a9922b315b59c60a2671f77"
+  },
+  {
+    "user_id": "6a9e3d10c58d37d5fa644323",
+    "image_url": "http://localhost:8000/static/uploads/90a0a1478f164beeaa19f4eba4464304.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/0ff47d0c9eec4559a1ae08b757f8e825.jpg",
+    "top_predictions": [
+      {
+        "disease": "Healthy_Skin",
+        "title": "Healthy Skin",
+        "confidence": 0.6969
+      },
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.1361
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.1129
+      }
+    ],
+    "primary_disease": "Healthy_Skin",
+    "confidence": 0.6969,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-09-07T04:28:06.967092+00:00",
+    "_id": "6a9e3d56c58d37d5fa644324"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/cc0c966881e140bc990a38f784f33165.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/3e35aec319a74a279254b7fce1fdeeed.jpg",
+    "top_predictions": [
+      {
+        "disease": "Healthy_Skin",
+        "title": "Healthy Skin",
+        "confidence": 0.6969
+      },
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.1361
+      },
+      {
+        "disease": "Basal_Cell_Carcinoma",
+        "title": "Basal Cell Carcinoma (BCC)",
+        "confidence": 0.1129
+      }
+    ],
+    "primary_disease": "Healthy_Skin",
+    "confidence": 0.6969,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [
+      "Image may be slightly out of focus \u2014 results may be less accurate."
+    ],
+    "created_at": "2026-09-07T05:47:51.225538+00:00",
+    "_id": "6a9e5007483e5e0fe0c311f6"
+  },
+  {
+    "user_id": "6a3e48820c7c56925b729ee3",
+    "image_url": "http://localhost:8000/static/uploads/c1301f74033746ebb8dcb9497272726d.jpg",
+    "gradcam_url": "http://localhost:8000/static/uploads/12ca21e4e4a44876ac1c515b7cddae14.jpg",
+    "top_predictions": [
+      {
+        "disease": "Benign_Keratosis",
+        "title": "Benign Keratosis-like Lesions",
+        "confidence": 0.4737
+      },
+      {
+        "disease": "Atopic_Dermatitis",
+        "title": "Atopic Dermatitis",
+        "confidence": 0.4649
+      },
+      {
+        "disease": "Eczema",
+        "title": "Eczema",
+        "confidence": 0.0278
+      }
+    ],
+    "primary_disease": "Benign_Keratosis",
+    "confidence": 0.4737,
+    "severity": "Mild",
+    "inference_mode": "mock (placeholder fallback)",
+    "image_quality_warnings": [],
+    "created_at": "2026-09-07T06:11:09.588405+00:00",
+    "_id": "6a9e557d483e5e0fe0c311f7"
+  }
+]
