@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     smtp_port: int = 587
     smtp_user: str = ""
     smtp_password: str = ""
-    smtp_from_name: str = "AI Skin Health"
+    smtp_from_name: str = "DermaScan AI"
 
     # ML
     model_path: str = "./ml/saved_model/skin_model.keras"

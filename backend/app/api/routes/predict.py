@@ -7,7 +7,7 @@ from bson import ObjectId
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user, get_current_user_optional
 from app.db.mongodb import predictions_collection
 from app.schemas.prediction import PredictionResponse
 from app.services.cloudinary_service import upload_image_bytes
@@ -22,7 +22,7 @@ ALLOWED_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp"}
 @router.post("", response_model=PredictionResponse)
 async def predict(
     file: UploadFile = File(...),
-    current_user: dict = Depends(get_current_user),
+    current_user: dict | None = Depends(get_current_user_optional),
 ):
     if file.content_type not in ALLOWED_CONTENT_TYPES:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "Only JPG, PNG, or WEBP images are supported.")
@@ -42,8 +42,10 @@ async def predict(
     _, encoded_overlay = cv2.imencode(".jpg", overlay_bgr)
     gradcam_url = upload_image_bytes(encoded_overlay.tobytes(), folder="skin-ai/gradcam")
 
+    user_id = str(current_user["_id"]) if current_user and "_id" in current_user else "guest_user"
+
     doc = {
-        "user_id": str(current_user["_id"]),
+        "user_id": user_id,
         "image_url": original_url,
         "gradcam_url": gradcam_url,
         "top_predictions": result["top_predictions"],

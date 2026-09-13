@@ -33,10 +33,14 @@ def _ensure_configured() -> bool:
 
 def upload_image_bytes(image_bytes: bytes, folder: str = "skin-ai/uploads") -> str:
     if _ensure_configured():
-        result = cloudinary.uploader.upload(image_bytes, folder=folder, resource_type="image")
-        return result["secure_url"]
+        try:
+            result = cloudinary.uploader.upload(image_bytes, folder=folder, resource_type="image")
+            if result and "secure_url" in result:
+                return result["secure_url"]
+        except Exception as e:
+            print(f"Cloudinary upload failed: {e}. Using local disk storage fallback.")
 
-    # Local fallback inside workspace static/uploads folder
+    # Local fallback inside workspace static/uploads folder (instant <1ms)
     BASE_DIR = Path(__file__).resolve().parent.parent.parent
     local_dir = BASE_DIR / "static" / "uploads"
     os.makedirs(local_dir, exist_ok=True)

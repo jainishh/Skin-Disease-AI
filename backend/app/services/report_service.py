@@ -144,7 +144,7 @@ class NumberedCanvas(canvas.Canvas):
         
         page_text = f"Page {self._pageNumber} of {page_count}"
         self.drawRightString(550, 42, page_text)
-        self.drawRightString(550, 30, "© 2026 AI Skin Health")
+        self.drawRightString(550, 30, "© 2026 DermaScan AI")
 
         self.restoreState()
 
@@ -516,7 +516,7 @@ def generate_pdf_report(
     # 1. Clinic-style Header Banner
     logo_data = [
         [
-            Paragraph("<b>AI SKIN HEALTH CLINIC</b><br/>"
+            Paragraph("<b>DERMASCAN AI CLINICAL LABS</b><br/>"
                       "<font size=6.5 color='#52B29A'>State-of-the-Art Diagnostic Screening</font>", title_style),
             Paragraph("<b>REPORT ID:</b> SKN-20260718-001<br/>"
                       "<b>DATE:</b> 18 July 2026<br/>"

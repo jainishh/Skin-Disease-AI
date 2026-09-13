@@ -79,5 +79,35 @@
     "favorite_doctors": [],
     "favorite_hospitals": [],
     "_id": "6a9e3d10c58d37d5fa644323"
+  },
+  {
+    "full_name": "jainish pael",
+    "email": "jainish2005@gmail.com",
+    "hashed_password": "$2b$04$p3tzz.FrOW9cO1uNpeGqk.dopvupEwXW2cn3nJj2o24aY22sOcSjC",
+    "role": "user",
+    "preferred_language": "en",
+    "is_verified": false,
+    "avatar_url": null,
+    "auth_provider": "local",
+    "google_id": null,
+    "created_at": "2026-09-13T02:45:03.483753+00:00",
+    "favorite_doctors": [],
+    "favorite_hospitals": [],
+    "_id": "6aa60e2f1af2c7cfc7df590e"
+  },
+  {
+    "full_name": "ankur patel",
+    "email": "ankur2005@gmail.com",
+    "hashed_password": "$2b$04$4aFGHDrdtEG6jtkeIljgaevkjsT5hHDlQZAt8kBzElEupxPyvscl.",
+    "role": "user",
+    "preferred_language": "en",
+    "is_verified": false,
+    "avatar_url": null,
+    "auth_provider": "local",
+    "google_id": null,
+    "created_at": "2026-09-13T02:51:57.856871+00:00",
+    "favorite_doctors": [],
+    "favorite_hospitals": [],
+    "_id": "6aa60fcd1af2c7cfc7df590f"
   }
 ]

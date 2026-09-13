@@ -12,7 +12,7 @@ class UserModel:
         full_name: str,
         email: str,
         hashed_password: str,
-        role: Literal["user", "admin"] = "user",
+        role: Literal["patient", "doctor"] = "patient",
         preferred_language: str = "en",
         is_verified: bool = False,
         avatar_url: str | None = None,

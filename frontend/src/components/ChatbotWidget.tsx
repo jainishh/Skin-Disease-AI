@@ -22,7 +22,7 @@ export default function ChatbotWidget() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Hello! I am your Darma AI assistant. 🌿\nHow can I help you understand your reports, skincare routines, or explainable AI metrics today?",
+      text: "Hello! I am your DermaScan AI clinical assistant. 🌿\nHow can I help you understand your scan results, skincare routines, or explainable AI metrics today?",
       timestamp: new Date(),
     },
   ]);
@@ -53,7 +53,7 @@ export default function ChatbotWidget() {
     } catch (err) {
       const errorMsg: Message = {
         sender: "bot",
-        text: "I am having trouble connecting to my knowledge base. Please check your internet connection and try again.",
+        text: "I am having trouble connecting to my clinical knowledge base. Please check your network connection and try again.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMsg]);
@@ -64,16 +64,13 @@ export default function ChatbotWidget() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 font-body">
-      {/* Toggle Button */}
+      {/* Floating Launcher Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform focus:outline-none"
-        style={{
-          background: "linear-gradient(135deg, #C27A54, #A85C36)",
-          boxShadow: "0 8px 30px rgba(168, 92, 54, 0.4)",
-        }}
+        className="flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform focus:outline-none bg-gradient-to-tr from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-blue-500/25"
+        title="DermaScan AI Assistant"
       >
         {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
       </motion.button>
@@ -82,58 +79,57 @@ export default function ChatbotWidget() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            initial={{ opacity: 0, y: 40, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute bottom-16 right-0 w-[90vw] sm:w-[380px] h-[500px] flex flex-col rounded-3xl overflow-hidden border border-skin-200 bg-white/95 shadow-2xl backdrop-blur-xl"
-            style={{
-              boxShadow: "0 24px 64px -12px rgba(168, 92, 54, 0.25)",
-            }}
+            exit={{ opacity: 0, y: 40, scale: 0.92 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute bottom-16 right-0 w-[90vw] sm:w-[390px] h-[520px] flex flex-col rounded-3xl overflow-hidden border border-[var(--brand-border)] bg-[var(--brand-surface)] shadow-2xl backdrop-blur-2xl"
           >
             {/* Header */}
-            <div
-              className="px-5 py-4 text-white flex items-center justify-between"
-              style={{ background: "linear-gradient(135deg, #C27A54, #A85C36)" }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                  <Bot size={18} className="text-white" />
+            <div className="px-5 py-4 text-white flex items-center justify-between bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <Bot size={20} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-sm leading-tight flex items-center gap-1.5">
-                    Skin Health Chatbot <Sparkles size={12} className="text-amber-200 animate-pulse" />
+                  <h3 className="font-bold text-sm leading-tight flex items-center gap-1.5">
+                    DermaScan AI <Sparkles size={13} className="text-cyan-200 animate-pulse" />
                   </h3>
-                  <p className="text-[10px] text-white/70">Educational FAQ Assistant</p>
+                  <p className="text-[10px] text-white/80">Certified Diagnostic FAQ Assistant</p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="rounded-full p-1 text-white/80 hover:text-white hover:bg-white/10 transition"
+              >
                 <X size={18} />
               </button>
             </div>
 
             {/* Message Pane */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3.5">
               {messages.map((m, idx) => (
                 <div
                   key={idx}
                   className={`flex gap-2.5 ${m.sender === "user" ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  {/* Icon */}
+                  {/* Avatar */}
                   <div
                     className={`h-7 w-7 rounded-full flex items-center justify-center text-[10px] shrink-0 ${
-                      m.sender === "user" ? "bg-skin-100 text-skin-700" : "bg-skin-500 text-white"
+                      m.sender === "user"
+                        ? "bg-[var(--brand-primary)] text-white"
+                        : "bg-[var(--brand-secondary)] text-white"
                     }`}
                   >
-                    {m.sender === "user" ? <User size={12} /> : <Bot size={12} />}
+                    {m.sender === "user" ? <User size={13} /> : <Bot size={13} />}
                   </div>
 
                   {/* Text Bubble */}
                   <div
-                    className={`rounded-2xl px-3.5 py-2.5 text-xs max-w-[75%] leading-relaxed whitespace-pre-line shadow-sm border ${
+                    className={`rounded-2xl px-4 py-2.5 text-xs max-w-[78%] leading-relaxed whitespace-pre-line shadow-xs border ${
                       m.sender === "user"
-                        ? "bg-skin-500 text-white border-skin-500 rounded-tr-none"
-                        : "bg-skin-50/50 text-mocha border-skin-100 rounded-tl-none"
+                        ? "bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] rounded-tr-none"
+                        : "bg-[var(--brand-bg)] text-[var(--brand-text)] border-[var(--brand-border)] rounded-tl-none"
                     }`}
                   >
                     {m.text}
@@ -144,11 +140,11 @@ export default function ChatbotWidget() {
               {/* Typing indicator */}
               {loading && (
                 <div className="flex gap-2.5 flex-row">
-                  <div className="h-7 w-7 rounded-full flex items-center justify-center bg-skin-500 text-white shrink-0">
-                    <Loader2 size={12} className="animate-spin" />
+                  <div className="h-7 w-7 rounded-full flex items-center justify-center bg-[var(--brand-secondary)] text-white shrink-0">
+                    <Loader2 size={13} className="animate-spin" />
                   </div>
-                  <div className="rounded-2xl rounded-tl-none bg-skin-50/50 text-mocha/50 border border-skin-100 px-4 py-3 text-xs italic">
-                    Thinking...
+                  <div className="rounded-2xl rounded-tl-none bg-[var(--brand-bg)] text-[var(--brand-text-muted)] border border-[var(--brand-border)] px-4 py-2.5 text-xs italic">
+                    Analyzing clinical query...
                   </div>
                 </div>
               )}
@@ -156,14 +152,16 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Quick Questions Grid */}
-            <div className="px-4 py-2 border-t border-skin-100 bg-skin-50/30">
-              <p className="text-[10px] font-semibold text-mocha/40 uppercase tracking-wider mb-1.5">Suggested Questions</p>
+            <div className="px-4 py-2.5 border-t border-[var(--brand-border)] bg-[var(--brand-bg)]/50">
+              <p className="text-[10px] font-bold text-[var(--brand-text-muted)] uppercase tracking-wider mb-1.5">
+                Suggested Topics
+              </p>
               <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
                 {QUICK_QUESTIONS.map((q, i) => (
                   <button
                     key={i}
                     onClick={() => handleSend(q.query)}
-                    className="whitespace-nowrap rounded-full border border-skin-200 bg-white px-3 py-1 text-[10px] font-medium text-skin-700 hover:border-skin-500 hover:bg-skin-50 transition-all shadow-sm"
+                    className="whitespace-nowrap rounded-full border border-[var(--brand-border)] bg-[var(--brand-surface)] px-3 py-1 text-[10px] font-medium text-[var(--brand-text)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] transition-all shadow-xs"
                   >
                     {q.label}
                   </button>
@@ -177,19 +175,19 @@ export default function ChatbotWidget() {
                 e.preventDefault();
                 handleSend(input);
               }}
-              className="p-3 border-t border-skin-100 flex gap-2 items-center bg-white"
+              className="p-3 border-t border-[var(--brand-border)] flex gap-2 items-center bg-[var(--brand-surface)]"
             >
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about skin metrics or recommendations..."
-                className="flex-1 rounded-full border border-skin-200 bg-skin-50/50 px-4 py-2 text-xs focus:border-skin-500 focus:outline-none placeholder-mocha/40"
+                placeholder="Ask about skin conditions or metrics..."
+                className="flex-1 rounded-full border border-[var(--brand-border)] bg-[var(--brand-bg)] px-4 py-2 text-xs text-[var(--brand-text)] focus:border-[var(--brand-primary)] focus:outline-none placeholder-[var(--fg-faint)]"
               />
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="rounded-full p-2 bg-skin-500 text-white disabled:bg-skin-200 hover:bg-skin-600 transition shadow"
+                className="rounded-full p-2 bg-[var(--brand-primary)] text-white disabled:opacity-40 hover:bg-[var(--brand-primary-hover)] transition shadow-sm"
               >
                 <Send size={14} />
               </button>

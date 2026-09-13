@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
-import { Camera, ImagePlus, CheckCircle2 } from "lucide-react";
+import { Camera, ImagePlus, CheckCircle2, UploadCloud, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
@@ -32,10 +32,10 @@ export default function UploadDropzone({ onFileSelected, isAnalyzing }: Props) {
   return (
     <div
       {...getRootProps()}
-      className={`scan-ring ${isAnalyzing ? "scanning" : ""} relative mx-auto flex aspect-square w-full max-w-sm cursor-pointer flex-col items-center justify-center overflow-hidden rounded-skin text-center transition-all duration-300 border-2 border-dashed backdrop-blur-xl ${
+      className={`scan-ring ${isAnalyzing ? "scanning" : ""} relative mx-auto flex aspect-square w-full max-w-sm cursor-pointer flex-col items-center justify-center overflow-hidden rounded-3xl text-center transition-all duration-300 border-2 border-dashed ${
         isDragActive
-          ? "scale-105 bg-amber-50/50 dark:bg-blue-950/20 border-amber-500 dark:border-blue-500 shadow-md"
-          : "bg-amber-50/30 dark:bg-[#1E293B]/40 border-amber-500/30 dark:border-[#334155] hover:scale-[1.02] shadow-[0_8px_40px_-8px_rgba(194,122,84,0.1)] dark:shadow-none"
+          ? "scale-105 bg-[var(--brand-primary)]/10 border-[var(--brand-primary)] shadow-lg"
+          : "bg-slate-50/80 dark:bg-[#141C26]/50 border-2 border-dashed border-[var(--brand-border)] hover:border-[var(--brand-primary)] hover:scale-[1.01] transition-all"
       }`}
     >
       <input {...getInputProps()} />
@@ -44,22 +44,19 @@ export default function UploadDropzone({ onFileSelected, isAnalyzing }: Props) {
         {preview ? (
           <motion.div
             key="preview"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0"
           >
             <img
               src={preview}
-              alt="Selected skin area"
-              className="h-full w-full object-cover rounded-skin"
+              alt="Selected skin lesion"
+              className="h-full w-full object-cover rounded-3xl"
             />
-            <div
-              className="absolute inset-0 rounded-skin flex items-end justify-center pb-5"
-              style={{ background: "linear-gradient(to top, rgba(46,26,14,0.5) 0%, transparent 50%)" }}
-            >
-              <span className="flex items-center gap-1.5 text-white text-xs font-semibold">
-                <CheckCircle2 size={13} /> Ready to analyze
+            <div className="absolute inset-0 rounded-3xl flex items-end justify-center pb-5 bg-gradient-to-t from-black/60 via-transparent to-transparent">
+              <span className="flex items-center gap-1.5 text-white text-xs font-semibold px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md">
+                <CheckCircle2 size={14} className="text-[var(--brand-success)]" /> Ready for Clinical AI Scan
               </span>
             </div>
           </motion.div>
@@ -71,18 +68,22 @@ export default function UploadDropzone({ onFileSelected, isAnalyzing }: Props) {
             exit={{ opacity: 0 }}
             className="flex flex-col items-center px-8"
           >
-            {/* Decorative orb */}
-            <div
-              className="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-amber-100/50 to-amber-200/50 dark:from-blue-900/30 dark:to-blue-800/30"
-            >
-              <ImagePlus size={32} className="text-amber-600 dark:text-blue-450" />
+            {/* Medical Orb Icon */}
+            <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-tr from-[var(--brand-primary)]/15 to-[var(--brand-secondary)]/15 text-[var(--brand-primary)]">
+              <UploadCloud size={34} />
             </div>
-            <p className="font-display text-lg font-semibold text-slate-800 dark:text-[#F8FAFC] leading-snug">
-              {isDragActive ? "Drop your image here…" : t("upload.drop_text")}
+            
+            <p className="font-bold text-base text-[var(--brand-text)] leading-snug">
+              {isDragActive ? "Drop image here to scan…" : t("upload.drop_text", { defaultValue: "Drag & drop skin photo here, or browse" })}
             </p>
-            <div className="mt-3 flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-[#94A3B8]">
-              <Camera size={12} />
-              JPG · PNG · WEBP — up to 8 MB
+            
+            <p className="mt-1 text-xs text-[var(--brand-text-muted)]">
+              High resolution close-up lesion images
+            </p>
+
+            <div className="mt-4 flex items-center gap-2 text-[11px] font-mono text-[var(--brand-text-muted)] rounded-full px-3 py-1 bg-[var(--brand-bg)] border border-[var(--brand-border)]">
+              <Camera size={13} className="text-[var(--brand-primary)]" />
+              <span>JPG · PNG · WEBP (Max 8 MB)</span>
             </div>
           </motion.div>
         )}
@@ -90,11 +91,10 @@ export default function UploadDropzone({ onFileSelected, isAnalyzing }: Props) {
 
       {/* Drag active overlay */}
       {isDragActive && (
-        <div
-          className="absolute inset-0 rounded-skin flex items-center justify-center"
-          style={{ background: "rgba(234,196,168,0.35)" }}
-        >
-          <p className="font-display text-xl font-semibold text-skin-700">Drop it!</p>
+        <div className="absolute inset-0 rounded-3xl flex items-center justify-center bg-[var(--brand-primary)]/20 backdrop-blur-xs">
+          <p className="font-bold text-lg text-[var(--brand-primary)] flex items-center gap-2">
+            <Sparkles size={20} /> Release to scan image
+          </p>
         </div>
       )}
     </div>

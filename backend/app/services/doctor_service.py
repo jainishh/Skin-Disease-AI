@@ -26,9 +26,14 @@ async def find_doctors(city: str | None = None, state: str | None = None,
         query["state"] = {"$regex": f"^{state}$", "$options": "i"}
 
     results = []
+    seen_ids = set()
     cursor = doctors_collection.find(query)
     async for doc in cursor:
-        doc["id"] = doc.get("id") or str(doc["_id"])
+        doc_id = str(doc.get("id") or doc["_id"])
+        if doc_id in seen_ids:
+            continue
+        seen_ids.add(doc_id)
+        doc["id"] = doc_id
         if "_id" in doc:
             doc["_id"] = str(doc["_id"])
         results.append(doc)
@@ -55,9 +60,14 @@ async def find_hospitals(city: str | None = None, state: str | None = None,
         query["emergency"] = True
 
     results = []
+    seen_ids = set()
     cursor = hospitals_collection.find(query)
     async for doc in cursor:
-        doc["id"] = doc.get("id") or str(doc["_id"])
+        doc_id = str(doc.get("id") or doc["_id"])
+        if doc_id in seen_ids:
+            continue
+        seen_ids.add(doc_id)
+        doc["id"] = doc_id
         if "_id" in doc:
             doc["_id"] = str(doc["_id"])
         results.append(doc)

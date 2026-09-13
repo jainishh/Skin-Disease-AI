@@ -310,7 +310,7 @@ def predict_image(image_bytes: bytes) -> dict:
         img_array = np.expand_dims(rgb.astype("float32"), axis=0)
 
         # TTA for higher effective accuracy
-        avg_preds = _predict_with_tta(model, img_array, n_augments=5)
+        avg_preds = _predict_with_tta(model, img_array, n_augments=3)
 
         # Temperature scaling to calibrate confidence
         calibrated_preds = _temperature_scale(avg_preds, temperature=1.15)

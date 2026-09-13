@@ -60,4 +60,5 @@ export interface User {
   role: string;
   preferred_language: string;
   is_verified: boolean;
+  avatar_url?: string;
 }

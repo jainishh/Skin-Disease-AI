@@ -20,6 +20,7 @@ export default function Results() {
   const [loadingRec, setLoadingRec] = useState(false);
   const [blendOpacity, setBlendOpacity] = useState<number>(50);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
+  const [downloadingPdf, setDownloadingPdf] = useState(false);
 
   // Feedback states
   const [rating, setRating] = useState<number>(0);
@@ -33,6 +34,31 @@ export default function Results() {
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState("");
+
+  const handleDownloadPdf = async () => {
+    const predId = prediction_id || result?.prediction_id;
+    if (!predId) return;
+    setDownloadingPdf(true);
+    try {
+      const lang = i18n.language || "en";
+      const response = await apiClient.get(`/reports/${predId}/pdf?lang=${lang}`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data], { type: "application/pdf" }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `Skin_Report_${predId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err: any) {
+      console.error("Error downloading PDF report:", err);
+      alert(err.response?.data?.detail || "Failed to download PDF summary report.");
+    } finally {
+      setDownloadingPdf(false);
+    }
+  };
 
   // Get the language-aware disease display name
   const getDisplayName = useCallback(() => {
@@ -177,28 +203,28 @@ export default function Results() {
       {/* Back button */}
       <LinkRoute
         to="/upload"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold mb-6 text-blue-500 hover:text-blue-700 transition group"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold mb-6 text-[var(--brand-primary)] hover:opacity-80 transition group"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
         Analyze another image
       </LinkRoute>
 
       {/* Header Area */}
-      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-slate-100 dark:border-[#334155] pb-6 mb-8">
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b border-[var(--brand-border)] pb-6 mb-8">
         <div>
-          <h1 className="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-[#F8FAFC] tracking-tight flex items-center gap-2">
-            Analysis Results <Sparkles size={20} className="text-blue-500 animate-pulse" />
+          <h1 className="text-3xl md:text-4xl font-bold text-[var(--brand-text)] tracking-tight flex items-center gap-2">
+            Analysis Results <Sparkles size={20} className="text-[var(--brand-secondary)] animate-pulse" />
           </h1>
-          <p className="text-slate-400 text-[10px] mt-1.5 font-mono">ASSESSMENT TRANSACTION ID: {result.prediction_id}</p>
+          <p className="text-[var(--brand-text-muted)] text-[10px] mt-1.5 font-mono">ASSESSMENT TRANSACTION ID: {result.prediction_id}</p>
         </div>
 
         {/* Top actions */}
         <div className="flex flex-wrap gap-2.5">
           <button
             onClick={handleTTS}
-            className={`inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-xs font-semibold border transition-all duration-300 shadow-sm ${isSpeaking
-                ? "bg-rose-500 border-rose-500 text-white shadow-rose-500/20"
-                : "bg-white dark:bg-[#1E293B] border-slate-100 dark:border-[#334155] text-slate-600 dark:text-[#CBD5E1] hover:border-slate-200 dark:hover:border-[#475569] hover:bg-slate-50 dark:hover:bg-[#273449]"
+            className={`inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-xs font-semibold border transition-all duration-300 shadow-xs ${isSpeaking
+                ? "bg-[var(--brand-error)] border-[var(--brand-error)] text-white shadow-md"
+                : "bg-[var(--brand-surface)] border-[var(--brand-border)] text-[var(--brand-text)] hover:border-[var(--brand-primary)]"
               }`}
           >
             {isSpeaking ? (
@@ -207,12 +233,14 @@ export default function Results() {
               <><Volume2 size={14} /> Read Report Aloud</>
             )}
           </button>
-          <a
-            href={`${apiClient.defaults.baseURL}/reports/${result.prediction_id}/pdf`}
-            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-5 py-2.5 text-xs font-semibold shadow-md shadow-blue-500/10 transition"
+          <button
+            onClick={handleDownloadPdf}
+            disabled={downloadingPdf}
+            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] hover:opacity-95 text-white px-5 py-2.5 text-xs font-semibold shadow-sm transition disabled:opacity-60 cursor-pointer"
           >
-            <Download size={14} /> Download PDF Summary
-          </a>
+            <Download size={14} className={downloadingPdf ? "animate-bounce" : ""} />
+            {downloadingPdf ? "Generating PDF..." : "Download PDF Summary"}
+          </button>
         </div>
       </div>
 
@@ -406,14 +434,14 @@ export default function Results() {
         <LinkRoute
           to="/doctors"
           state={{ city: result.primary_disease === "Melanoma" ? "Mumbai" : "Ahmedabad" }}
-          className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-6 py-3.5 text-xs font-semibold shadow-md shadow-blue-500/10 transition"
+          className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] hover:opacity-95 text-white px-6 py-3.5 text-xs font-semibold shadow-md transition"
         >
           <MapPin size={14} /> Find Nearest Dermatologists
         </LinkRoute>
 
         <LinkRoute
           to="/dashboard"
-          className="inline-flex items-center gap-2 rounded-2xl bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-[#334155] text-slate-600 dark:text-[#CBD5E1] px-6 py-3.5 text-xs font-semibold hover:bg-slate-50 dark:hover:bg-[#273449] shadow-sm transition"
+          className="inline-flex items-center gap-2 rounded-2xl bg-[var(--brand-surface)] border border-[var(--brand-border)] text-[var(--brand-text)] px-6 py-3.5 text-xs font-semibold hover:bg-[var(--brand-surface-hover)] shadow-xs transition"
         >
           View Historical Scans
         </LinkRoute>

@@ -13,25 +13,48 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=Fals
 
 
 async def get_current_user(token: Optional[str] = Depends(oauth2_scheme)) -> dict:
-    # Bypass authentication and return a default admin user from database or fallback mock
-    user = await users_collection.find_one({"role": "admin"})
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    payload = decode_token(token)
+    if not payload or not payload.get("sub"):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    user_id = payload.get("sub")
+    query = {"_id": ObjectId(user_id)} if ObjectId.is_valid(user_id) else {"_id": user_id}
+    user = await users_collection.find_one(query)
+    
     if not user:
-        user = await users_collection.find_one({})
-    if not user:
-        user = {
-            "_id": ObjectId("6a3e48820c7c56925b729ee3"),
-            "full_name": "Krishna Patel",
-            "email": "krishna@example.com",
-            "role": "admin",
-            "preferred_language": "en",
-            "is_verified": True,
-            "favorite_doctors": [],
-            "favorite_hospitals": []
-        }
-    else:
-        user = dict(user)
-        user["role"] = "admin"  # Upgrade to admin so admin features are accessible
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
     return user
+
+
+async def get_current_user_optional(token: Optional[str] = Depends(oauth2_scheme)) -> Optional[dict]:
+    if not token:
+        return None
+    try:
+        payload = decode_token(token)
+        if not payload or not payload.get("sub"):
+            return None
+        user_id = payload.get("sub")
+        query = {"_id": ObjectId(user_id)} if ObjectId.is_valid(user_id) else {"_id": user_id}
+        user = await users_collection.find_one(query)
+        return user
+    except Exception:
+        return None
 
 
 async def require_admin(user: dict = Depends(get_current_user)) -> dict:

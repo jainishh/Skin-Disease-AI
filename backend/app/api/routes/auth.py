@@ -59,8 +59,7 @@ async def register(payload: RegisterRequest):
     if existing:
         raise HTTPException(status.HTTP_409_CONFLICT, "An account with this email already exists.")
 
-    total_users = await users_collection.count_documents({})
-    assigned_role = "admin" if total_users == 0 else "user"
+    assigned_role = payload.role if payload.role in ["patient", "doctor"] else "patient"
 
     user = UserModel(
         full_name=payload.full_name,
@@ -78,7 +77,7 @@ async def register(payload: RegisterRequest):
     log_mock_email(
         "Email Verification",
         user.email,
-        f"Hi {user.full_name},\n\nThank you for registering at Darma AI. Please click the link below to verify your email:\n{verify_link}"
+        f"Hi {user.full_name},\n\nThank you for registering at DermaScan AI. Please click the link below to verify your email:\n{verify_link}"
     )
 
     return UserOut(
@@ -364,7 +363,7 @@ async def get_me(current_user: dict = Depends(get_current_user)):
         id=str(current_user["_id"]),
         full_name=current_user["full_name"],
         email=current_user["email"],
-        role=current_user.get("role", "user"),
+        role=current_user.get("role", "patient"),
         preferred_language=current_user.get("preferred_language", "en"),
         is_verified=current_user.get("is_verified", False),
         avatar_url=current_user.get("avatar_url"),

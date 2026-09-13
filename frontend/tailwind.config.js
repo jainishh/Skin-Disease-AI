@@ -5,52 +5,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Warm skin-health palette
-        skin: {
-          50: "#FFF8F4",   // lightest cream
-          100: "#FAF0E8",   // warm ivory background
-          200: "#F5E0CD",   // soft peach
-          300: "#EAC4A8",   // peach blush
-          400: "#D9A27E",   // warm tan
-          500: "#C27A54",   // terracotta / brand
-          600: "#A85C36",   // deep terracotta
-          700: "#7A3A20",   // warm brown
-          800: "#4E2210",   // dark mocha
-          900: "#2E110A",   // richest ink
+        brand: {
+          primary: "var(--brand-primary)",
+          "primary-hover": "var(--brand-primary-hover)",
+          secondary: "var(--brand-secondary)",
+          "secondary-hover": "var(--brand-secondary-hover)",
+          bg: "var(--brand-bg)",
+          surface: "var(--brand-surface)",
+          "surface-hover": "var(--brand-surface-hover)",
+          text: "var(--brand-text)",
+          "text-muted": "var(--brand-text-muted)",
+          border: "var(--brand-border)",
+          success: "var(--brand-success)",
+          warning: "var(--brand-warning)",
+          error: "var(--brand-error)",
         },
-        rose: {
-          50: "#FFF0F0",
-          100: "#FFD9D5",
-          200: "#F4A99A",
-          300: "#E87B6A",
-          400: "#D95042",
-          500: "#BE3529",   // alert / severe
+        med: {
+          blue: "#0077B6",
+          blueDark: "#4DA8DA",
+          teal: "#00B4A6",
+          tealDark: "#3ED6C4",
+          darkBg: "#0F1B24",
+          darkCard: "#16232E",
+          lightBg: "#FFFFFF",
+          lightCard: "#F5F9FC",
+          slate: "#1A2B3C",
+          slateLight: "#EAF1F5",
+          borderLight: "#E1E8ED",
+          borderDark: "#243440",
         },
-        blush: "#F2C4B2",   // decorative soft rose
-        cream: "#FAF6F2",   // page background
-        mocha: "#2E1A0E",   // primary text
-        sand: "#E8D5BF",    // secondary panel surface
-        sage: "#A8C4B0",    // subtle green accent
-        gold: "#D4922A",    // amber / confidence
       },
       fontFamily: {
-        display: ["Playfair Display", "Georgia", "serif"],
-        body: ["Inter", "sans-serif"],
+        display: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        body: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
         mono: ["IBM Plex Mono", "monospace"],
       },
       borderRadius: {
-        skin: "1.5rem",
-        blob: "60% 40% 50% 60% / 50% 60% 40% 50%",
+        skin: "1.25rem",
       },
       boxShadow: {
-        skin: "0 4px 32px -4px rgba(194,122,84,0.18), 0 1px 4px rgba(194,122,84,0.08)",
-        "skin-lg": "0 12px 60px -8px rgba(194,122,84,0.22)",
-        warm: "0 4px 24px -4px rgba(214,160,120,0.25)",
-      },
-      backgroundImage: {
-        "skin-gradient": "linear-gradient(135deg, #FAF6F2 0%, #F5E6D3 40%, #EAC4A8 100%)",
-        "skin-hero": "radial-gradient(ellipse at 30% 20%, #F5E0CD 0%, #FAF6F2 55%, #EAD8C8 100%)",
-        "warm-gradient": "linear-gradient(120deg, #F5E0CD, #FAF0E8 50%, #E8D5BF)",
+        med: "0 4px 20px -2px rgba(0, 119, 182, 0.08), 0 2px 6px -1px rgba(26, 43, 60, 0.04)",
+        "med-lg": "0 12px 40px -4px rgba(0, 119, 182, 0.14)",
+        "med-dark": "0 8px 32px -4px rgba(0, 0, 0, 0.5)",
       },
     },
   },

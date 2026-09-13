@@ -225,13 +225,13 @@ class LocalJSONCollection:
 # Determine if we should fallback to the mock database
 use_mock_db = False
 try:
-    # Quick connectivity test
-    sync_client = pymongo.MongoClient(settings.mongodb_uri, serverSelectionTimeoutMS=1500)
+    # Quick connectivity test with adequate timeout for SSL/DNS lookup
+    sync_client = pymongo.MongoClient(settings.mongodb_uri, serverSelectionTimeoutMS=8000)
     sync_client.admin.command('ping')
-    print("Database connection verified successfully. Using MongoDB.")
+    print("Database connection verified successfully. Using MongoDB Atlas.")
 except (ServerSelectionTimeoutError, Exception) as e:
     print("\n" + "=" * 60)
-    print("DATABASE CONNECTION FAIL: Local/Atlas MongoDB is unreachable.")
+    print(f"DATABASE CONNECTION FAIL: Local/Atlas MongoDB is unreachable ({e}).")
     print("SWITCHING TO BACKEND LOCAL JSON DATABASE FALLBACK.")
     print("All registration, dashboards, and favorites will work via local files.")
     print("=" * 60 + "\n")

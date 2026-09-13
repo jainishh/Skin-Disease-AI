@@ -21,7 +21,7 @@ from app.db.mongodb import init_indexes
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
-    title="AI Skin Disease Detection and Recommendation System",
+    title="DermaScan AI — Clinical Skin Disease Detection and Recommendation System",
     description="Educational, AI-assisted skin condition screening and recommendation API.",
     version="1.0.0",
 )
