@@ -1,482 +1,287 @@
-# 🔬 Comprehensive System Architecture, Workflow & Technical Specification
-
+# 🔬 Comprehensive System Architecture, Workflow & Model Prediction Guide
 ## AI-Powered Skin Disease Detection & Dermatologist Recommendation Platform
 
 ---
 
-## 📌 1. Executive Summary & Overview
+## 📌 1. Executive Summary & System Overview
 
-The **AI-Powered Skin Disease Detection & Dermatologist Recommendation Platform** is an end-to-end, medical-grade web system designed to deliver real-time dermatological screening, explainable AI visualization (Grad-CAM), dynamic severity assessment, and automated patient-to-dermatologist routing.
+The **AI-Powered Skin Disease Detection Platform** is a medical-grade, end-to-end web system designed to deliver instant skin disease screening, explainable visual heatmaps (Grad-CAM), dynamic severity scoring, and automated dermatologist locator matching.
 
-Built on a decoupled architecture, the system seamlessly connects a **React 18 + TypeScript** client application with an asynchronous **FastAPI** backend API gateway and a deep learning inference pipeline powered by an **EfficientNetV2-L** neural network trained on over **40,197 medical images**.
-
-### Key System Capabilities:
-
-- **Instant AI Screening:** Multi-class classification across 10 distinct skin disease categories + healthy skin baseline with **97.2% Test Accuracy**.
-- **Explainable AI (XAI):** Real-time **Grad-CAM (Gradient-Weighted Class Activation Mapping)** heatmaps overlaying exact lesion boundaries so patients and clinicians see _why_ the AI made a decision.
-- **Robust Image Quality Validation:** Automatic pre-inference checks using **OpenCV** to flag blurry, under-exposed, or over-exposed skin uploads before running inference.
-- **Geolocation-Based Doctor Matching:** Interactive **Leaflet.js** map interface connecting users with nearby verified dermatologists based on GPS or custom search criteria.
-- **Clinical PDF & QR Verification:** Dynamically generated medical report PDFs with embedded QR codes for document authenticity and instant verification.
-- **Multi-Lingual Support:** Complete localization support for **English, Hindi (हिंदी), and Gujarati (ગુજરાતી)** using `i18next`.
+```
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                                SYSTEM CAPABILITIES AT A GLANCE                          │
+├──────────────────────┬──────────────────────┬──────────────────────┬────────────────────┤
+│ 🎯 97.2% Accuracy    │ 👁️ Grad-CAM Heatmaps │ 🛡️ OpenCV Quality    │ 📍 Doctor Locator  │
+│ 10 Disease Categories│ Visual Explainability│ Sharpness & Lighting │ GPS & Specialty Map│
+└──────────────────────┴──────────────────────┴──────────────────────┴────────────────────┘
+```
 
 ---
 
 ## 🏗️ 2. System Architecture & End-to-End Workflow
 
-This section outlines how the entire system works conceptually using visual architectural diagrams and step-by-step data flow explanations (without raw code blocks).
-
 ---
 
-### 2.1 System Architecture Layered Diagram
+### 2.1 High-Level System Architecture (Easy-to-Understand)
 
+<div align="center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 480" width="100%" style="background:#0F172A; border-radius:12px; font-family:system-ui, -apple-system, sans-serif; padding:15px;">
+  <!-- Title -->
+  <text x="425" y="30" fill="#38BDF8" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="1">HOW THE SYSTEM ARCHITECTURE WORKS (HIGH LEVEL)</text>
+
+  <!-- 1. Client Layer -->
+  <rect x="30" y="60" width="790" height="85" rx="8" fill="#0F5E59" stroke="#14B8A6" stroke-width="2"/>
+  <text x="50" y="85" fill="#5EEAD4" font-size="13" font-weight="bold">1. CLIENT FRONTEND LAYER (React 18 + TypeScript SPA)</text>
+  
+  <rect x="50" y="95" width="230" height="38" rx="6" fill="#115E59" stroke="#2DD4BF" stroke-width="1"/>
+  <text x="165" y="118" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">🎨 User Interface (Tailwind CSS)</text>
+
+  <rect x="300" y="95" width="250" height="38" rx="6" fill="#115E59" stroke="#2DD4BF" stroke-width="1"/>
+  <text x="425" y="118" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">🔒 Session &amp; Language (EN/HI/GU)</text>
+
+  <rect x="570" y="95" width="230" height="38" rx="6" fill="#115E59" stroke="#2DD4BF" stroke-width="1"/>
+  <text x="685" y="118" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">🗺️ Doctor Locator (Leaflet Map)</text>
+
+  <!-- Down Arrow 1 -->
+  <path d="M 425 145 L 425 170" stroke="#38BDF8" stroke-width="3" stroke-dasharray="5,5"/>
+  <polygon points="425,176 418,164 432,164" fill="#38BDF8"/>
+  <rect x="445" y="148" width="220" height="22" rx="4" fill="#1E293B"/>
+  <text x="555" y="163" fill="#38BDF8" font-size="10" font-weight="bold" text-anchor="middle">HTTP POST (Skin Photo Upload)</text>
+
+  <!-- 2. Backend Gateway -->
+  <rect x="30" y="180" width="790" height="85" rx="8" fill="#1D8B82" stroke="#2DD4BF" stroke-width="2"/>
+  <text x="50" y="205" fill="#CCFBF1" font-size="13" font-weight="bold">2. BACKEND API GATEWAY (FastAPI Async Python Framework)</text>
+  
+  <rect x="50" y="215" width="230" height="38" rx="6" fill="#0F766E" stroke="#5EEAD4" stroke-width="1"/>
+  <text x="165" y="238" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">⚡ Async API Router</text>
+
+  <rect x="300" y="215" width="250" height="38" rx="6" fill="#0F766E" stroke="#5EEAD4" stroke-width="1"/>
+  <text x="425" y="238" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">🔍 OpenCV Image Quality Check</text>
+
+  <rect x="570" y="215" width="230" height="38" rx="6" fill="#0F766E" stroke="#5EEAD4" stroke-width="1"/>
+  <text x="685" y="238" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">📄 Clinical PDF &amp; QR Builder</text>
+
+  <!-- Down Arrow 2 -->
+  <path d="M 425 265 L 425 290" stroke="#34D399" stroke-width="3" stroke-dasharray="5,5"/>
+  <polygon points="425,296 418,284 432,284" fill="#34D399"/>
+  <rect x="445" y="268" width="220" height="22" rx="4" fill="#1E293B"/>
+  <text x="555" y="283" fill="#34D399" font-size="10" font-weight="bold" text-anchor="middle">Preprocessed 384x384 Image Tensor</text>
+
+  <!-- 3. AI ML Pipeline -->
+  <rect x="30" y="300" width="790" height="85" rx="8" fill="#0B423F" stroke="#34D399" stroke-width="2"/>
+  <text x="50" y="325" fill="#A7F3D0" font-size="13" font-weight="bold">3. DEEP LEARNING INFERENCE ENGINE (EfficientNetV2-L AI Model)</text>
+  
+  <rect x="50" y="335" width="230" height="38" rx="6" fill="#064E3B" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="165" y="358" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">🧠 EfficientNetV2 Classifier</text>
+
+  <rect x="300" y="335" width="250" height="38" rx="6" fill="#064E3B" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="425" y="358" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">🔄 5-Pass TTA (Test-Time Aug)</text>
+
+  <rect x="570" y="335" width="230" height="38" rx="6" fill="#064E3B" stroke="#6EE7B7" stroke-width="1"/>
+  <text x="685" y="358" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">👁️ Grad-CAM Visual Heatmap</text>
+
+  <!-- Down Arrow 3 -->
+  <path d="M 425 385 L 425 410" stroke="#F59E0B" stroke-width="3" stroke-dasharray="5,5"/>
+  <polygon points="425,416 418,404 432,404" fill="#F59E0B"/>
+
+  <!-- 4. Storage -->
+  <rect x="30" y="420" width="790" height="50" rx="8" fill="#D97706" stroke="#FBBF24" stroke-width="2"/>
+  <text x="425" y="450" fill="#FFF" font-size="12" font-weight="bold" text-anchor="middle">4. STORAGE &amp; DATABASE (MongoDB Atlas Records + Cloudinary CDN Media Storage)</text>
+</svg>
+</div>
+
+#### 📊 Mermaid Architecture Diagram
 ```mermaid
-graph TD
-    %% Styling Nodes
-    classDef client fill:#0F5E59,stroke:#0B423F,stroke-width:2px,color:#fff;
-    classDef api fill:#1D8B82,stroke:#0F5E59,stroke-width:2px,color:#fff;
-    classDef ml fill:#0B423F,stroke:#052422,stroke-width:2px,color:#fff;
-    classDef storage fill:#E67E22,stroke:#D35400,stroke-width:2px,color:#fff;
-    classDef external fill:#7F8C8D,stroke:#34495E,stroke-width:2px,color:#fff;
-
-    subgraph Layer1 ["1. Client Application Layer (React 18 + TypeScript)"]
-        UI["User Interface (Tailwind CSS & Framer Motion)"]:::client
-        StateMgmt["Client State & Context (Auth, Scan History, i18n)"]:::client
-        MapViz["Interactive Visualizations (Leaflet Maps & Recharts)"]:::client
-    end
-
-    subgraph Layer2 ["2. Backend API Gateway Layer (FastAPI Async)"]
-        APIRouter["Asynchronous REST API Router"]:::api
-        SecurityGate["Security Gateway (Rate Limiter & JWT Verification)"]:::api
-        ImageInspector["OpenCV Image Quality & Validation Filter"]:::api
-        PDFEngine["ReportLab PDF Generator & QR Code Builder"]:::api
-    end
-
-    subgraph Layer3 ["3. Machine Learning & Inference Engine Layer"]
-        NNModel["EfficientNetV2-L Deep Learning Classifier"]:::ml
-        TTAPipeline["Test-Time Augmentation Engine (5-Pass TTA)"]:::ml
-        XAIEngine["Grad-CAM Explainable AI Heatmap Extractor"]:::ml
-        SeverityRules["Medical Risk & Severity Evaluator"]:::ml
-    end
-
-    subgraph Layer4 ["4. Storage & Persistence Layer"]
-        MongoDB[("MongoDB Atlas Database\n(Users, Scans, Doctor Directory)")]:::storage
-        Cloudinary[("Cloudinary Cloud Media CDN\n(Original Photos & Heatmaps)")]:::storage
-    end
-
-    %% Flow Connections
-    UI -->|1. User Submits Image & Form| APIRouter
-    APIRouter --> SecurityGate
-    SecurityGate --> ImageInspector
-
-    ImageInspector -->|Image Quality Passed| NNModel
-    ImageInspector -.->|Quality Failed: Blurry/Dark| UI
-
-    NNModel --> TTAPipeline
-    TTAPipeline --> XAIEngine
-    XAIEngine --> SeverityRules
-
-    SeverityRules -->|Prediction Payload| APIRouter
-    APIRouter -->|Save Metadata & History| MongoDB
-    APIRouter -->|Store Original & Heatmap Images| Cloudinary
-    APIRouter -->|Compile Diagnostic Document| PDFEngine
-    APIRouter -->|Return Complete Diagnostic Result| UI
+flowchart TD
+    User[1. Patient Uploads Lesion Photo] --> ReactUI[2. React 18 Frontend Client]
+    ReactUI -->|POST /api/v1/predict| FastAPI[3. FastAPI Backend Gateway]
+    FastAPI --> OpenCV[4. OpenCV Blur & Light Quality Check]
+    OpenCV -->|Passed| AIModel[5. EfficientNetV2-L Neural Network]
+    AIModel --> TTA[6. 5-Pass Test-Time Augmentation]
+    TTA --> GradCAM[7. Grad-CAM Heatmap Extraction]
+    GradCAM --> Severity[8. Dynamic Severity Risk Scoring]
+    Severity --> Cloud[9. Cloudinary CDN & MongoDB Storage]
+    Cloud --> Result[10. Interactive Diagnostic Dashboard & Doctor Map]
 ```
 
 ---
 
-### 2.2 End-to-End Data Processing Workflow
+## 🤖 3. How the AI Model Predicts Results (Step-by-Step Model Inference)
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor User as Patient / User
-    participant Client as React SPA Client
-    participant API as FastAPI Gateway
-    participant CV as OpenCV Validator
-    participant AI as EfficientNetV2-L Model
-    participant CDN as Cloudinary Media CDN
-    participant DB as MongoDB Database
-
-    User->>Client: 1. Uploads or captures skin lesion image
-    Client->>Client: 2. Validates file format (.jpg/.png) and file size (<10MB)
-    Client->>API: 3. Transmits multipart form data (Image + Body Part Location)
-
-    API->>CV: 4. Evaluates image sharpness (Laplacian variance) & lighting
-    alt Low Quality / Blurry Image
-        CV-->>API: 5a. Flags image quality warning
-        API-->>Client: 6a. Returns warning prompt to user to retry capture
-    else Verified High-Quality Image
-        CV-->>API: 5b. Confirms image ready for AI processing
-    end
-
-    API->>AI: 7. Resizes tensor to 384x384 & feeds to EfficientNetV2-L
-    AI->>AI: 8. Performs 5-Pass Test-Time Augmentation (TTA)
-    AI->>AI: 9. Extracts Grad-CAM gradients from final convolution layer
-    AI->>AI: 10. Computes Softmax class probabilities & Severity rank
-    AI-->>API: 11. Returns Top-3 predictions + Raw Heatmap matrix
-
-    API->>CDN: 12. Uploads original skin image & Grad-CAM heatmap overlay
-    CDN-->>API: 13. Returns secure CDN media URLs
-
-    API->>DB: 14. Saves diagnostic record, timestamps, and confidence scores
-    API->>API: 15. Generates downloadable PDF clinical report with verification QR
-    API-->>Client: 16. Sends diagnostic JSON (Disease, Heatmap URL, PDF Link)
-
-    Client->>User: 17. Displays interactive Results Dashboard & Doctor Map
-```
+This section explains **exactly how the AI model receives a skin image and predicts the disease step-by-step**.
 
 ---
 
-### 2.3 Detailed Step-by-Step Functional Workflow Explanation
+### 3.1 Step-by-Step AI Model Prediction Flowchart
 
-#### Step 1: Patient Image Capture & Pre-Validation
+<div align="center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 560" width="100%" style="background:#0F172A; border-radius:12px; font-family:system-ui, -apple-system, sans-serif; padding:15px;">
+  <!-- Header -->
+  <text x="425" y="30" fill="#38BDF8" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="1">HOW THE AI MODEL PREDICTS SKIN DISEASE (STEP-BY-STEP)</text>
 
-- The user navigates to the upload page and selects a skin lesion photo via file picker or camera.
-- The React client performs instant client-side checks to verify that the file is an image (`image/jpeg`, `image/png`, `image/webp`) and does not exceed 10 MB.
+  <!-- Step 1: Input Photo -->
+  <g>
+    <rect x="50" y="55" width="220" height="70" rx="8" fill="#1E293B" stroke="#38BDF8" stroke-width="2"/>
+    <text x="160" y="80" fill="#38BDF8" font-size="11" font-weight="bold" text-anchor="middle">STEP 1: INPUT LESION PHOTO</text>
+    <text x="160" y="100" fill="#E2E8F0" font-size="10" text-anchor="middle">Patient uploads skin image</text>
+  </g>
 
-#### Step 2: Secure API Gateway Ingestion
+  <!-- Arrow 1->2 -->
+  <path d="M 270 90 L 320 90" stroke="#38BDF8" stroke-width="2.5"/><polygon points="325,90 315,85 315,95" fill="#38BDF8"/>
 
-- The client packages the image and metadata (e.g., body part location, user notes) into an encrypted REST API payload.
-- FastAPI receives the request, enforces rate limits (to block spam/bot attacks), and passes the raw image bytes to the image inspector module.
+  <!-- Step 2: Resizing -->
+  <g>
+    <rect x="330" y="55" width="220" height="70" rx="8" fill="#1E293B" stroke="#34D399" stroke-width="2"/>
+    <text x="440" y="80" fill="#34D399" font-size="11" font-weight="bold" text-anchor="middle">STEP 2: PREPROCESSING</text>
+    <text x="440" y="100" fill="#E2E8F0" font-size="10" text-anchor="middle">Resize to 384x384 RGB Tensor</text>
+  </g>
 
-#### Step 3: OpenCV Image Quality Inspection
+  <!-- Arrow 2->3 -->
+  <path d="M 550 90 L 600 90" stroke="#34D399" stroke-width="2.5"/><polygon points="605,90 595,85 595,95" fill="#34D399"/>
 
-- Before wasting computational GPU resources on invalid images, **OpenCV** analyzes the photo:
-  - **Blur Detection:** Uses Laplacian variance math to ensure the lesion is in sharp focus.
-  - **Brightness & Contrast Checks:** Ensures the skin is well-lit and not pitch black or completely washed out.
-- If the image fails quality checks, the system returns a polite warning requesting a clearer photo.
+  <!-- Step 3: TTA -->
+  <g>
+    <rect x="610" y="55" width="200" height="70" rx="8" fill="#1E293B" stroke="#F59E0B" stroke-width="2"/>
+    <text x="710" y="80" fill="#F59E0B" font-size="11" font-weight="bold" text-anchor="middle">STEP 3: 5-PASS TTA</text>
+    <text x="710" y="100" fill="#E2E8F0" font-size="10" text-anchor="middle">Rotations &amp; Flips Averaged</text>
+  </g>
 
-#### Step 4: Deep Learning Classification & TTA Execution
+  <!-- Down Arrow 3->4 -->
+  <path d="M 710 125 L 710 160" stroke="#F59E0B" stroke-width="2.5"/><polygon points="710,165 705,155 715,155" fill="#F59E0B"/>
 
-- Validated images are resized to a high-resolution $384 \times 384 \times 3$ RGB tensor.
-- The image passes through **EfficientNetV2-L**, executing **5-Pass Test-Time Augmentation (TTA)** where subtle rotations and flips are averaged to produce ultra-stable predictions across 11 classes.
+  <!-- Step 4: EfficientNet BackBone -->
+  <g>
+    <rect x="50" y="170" width="760" height="85" rx="8" fill="#0F5E59" stroke="#14B8A6" stroke-width="2"/>
+    <text x="430" y="195" fill="#5EEAD4" font-size="13" font-weight="bold" text-anchor="middle">STEP 4: EFFICIENTNETV2-L DEEP FEATURE EXTRACTION</text>
+    <text x="430" y="215" fill="#CCFBF1" font-size="10.5" text-anchor="middle">Scans fine textures, border irregularity, asymmetry, pigment color variation across Fused-MBConv layers</text>
+    <text x="430" y="235" fill="#99F6E4" font-size="10" text-anchor="middle">Passes high-dimensional feature vectors to Global Average Pooling (GAP) &amp; Dense Heads (512 ➔ 256)</text>
+  </g>
 
-#### Step 5: Explainable AI (Grad-CAM) Heatmap Generation
+  <!-- Down Arrow 4->5 -->
+  <path d="M 430 255 L 430 290" stroke="#38BDF8" stroke-width="2.5"/><polygon points="430,295 425,285 435,285" fill="#38BDF8"/>
 
-- While classifying, the system extracts activation gradients from the final Fused-MBConv convolutional block of EfficientNetV2-L.
-- The gradients are converted into a $384 \times 384$ thermal intensity map, highlighting exact pixels that influenced the AI's decision.
-- OpenCV colorizes this map and overlays it onto the original photo.
+  <!-- Step 5: Probability Vector -->
+  <g>
+    <rect x="50" y="300" width="360" height="120" rx="8" fill="#1E293B" stroke="#60A5FA" stroke-width="2"/>
+    <text x="230" y="325" fill="#60A5FA" font-size="12" font-weight="bold" text-anchor="middle">STEP 5: SOFTMAX PROBABILITY SCORES</text>
+    
+    <!-- Score Bars -->
+    <text x="70" y="348" fill="#EF4444" font-size="10" font-weight="bold">Melanoma:</text>
+    <rect x="150" y="338" width="180" height="12" rx="3" fill="#EF4444"/>
+    <text x="340" y="348" fill="#FFF" font-size="10" font-weight="bold">92.4%</text>
 
-#### Step 6: Dynamic Severity Evaluation & Recommendation
+    <text x="70" y="370" fill="#F59E0B" font-size="10">Melanocytic Nevi:</text>
+    <rect x="150" y="360" width="30" height="12" rx="3" fill="#F59E0B"/>
+    <text x="190" y="370" fill="#FFF" font-size="9">5.1%</text>
 
-- The system evaluates the primary prediction against medical risk tables:
-  - **Critical / High Urgency:** Conditions like _Melanoma_ or _Basal Cell Carcinoma_ trigger immediate recommendation badges to see a doctor.
-  - **Moderate Urgency:** Conditions like _Eczema_ or _Psoriasis_ provide care guidelines and specialist links.
-  - **Mild / Benign:** Conditions like _Melanocytic Nevi (Moles)_ reassure the user while recommending routine monitoring.
+    <text x="70" y="392" fill="#10B981" font-size="10">Basal Cell Carcinoma:</text>
+    <rect x="150" y="382" width="15" height="12" rx="3" fill="#10B981"/>
+    <text x="175" y="392" fill="#FFF" font-size="9">1.8%</text>
+  </g>
 
-#### Step 7: Cloud Storage, PDF Report & Client Render
+  <!-- Step 6: Grad-CAM Heatmap -->
+  <g>
+    <rect x="440" y="300" width="370" height="120" rx="8" fill="#1E293B" stroke="#A78BFA" stroke-width="2"/>
+    <text x="625" y="325" fill="#C4B5FD" font-size="12" font-weight="bold" text-anchor="middle">STEP 6: GRAD-CAM HEATMAP EXPLAINABILITY</text>
+    <text x="625" y="348" fill="#E2E8F0" font-size="10" text-anchor="middle">Calculates gradients from final Conv layer</text>
 
-- Images and heatmaps are archived in **Cloudinary CDN**.
-- Scan results are stored in **MongoDB Atlas**.
-- A clinical PDF report complete with an encrypted verification QR code is compiled dynamically using **ReportLab**.
-- The client renders an interactive dashboard where users can slide between original and heatmap views and locate nearby dermatologists on an interactive map.
+    <rect x="460" y="360" width="330" height="45" rx="5" fill="#4C1D95" stroke="#8B5CF6"/>
+    <text x="625" y="380" fill="#DDD6FE" font-size="10" font-weight="bold" text-anchor="middle">🔥 Thermal Red/Yellow Overlay on Lesion</text>
+    <text x="625" y="395" fill="#C4B5FD" font-size="9" text-anchor="middle">Shows EXACT region that triggered 92.4% Melanoma</text>
+  </g>
 
----
+  <!-- Down Arrow 5+6 -> 7 -->
+  <path d="M 430 420 L 430 450" stroke="#34D399" stroke-width="2.5"/><polygon points="430,455 425,445 435,445" fill="#34D399"/>
 
-## 🛠️ 3. Technologies, Tools & Frameworks (With Rationale)
-
-### 3.1 Technology Stack Overview
-
-```mermaid
-graph LR
-    subgraph Stack ["Technology Stack Overview"]
-        F["Frontend Layer\nReact 18 + TS + Vite\nTailwind CSS + Leaflet.js"] --- B["Backend Layer\nFastAPI (Python 3.10+)\nOpenCV + ReportLab"]
-        B --- M["Machine Learning Layer\nTensorFlow 2.15 + Keras\nEfficientNetV2-L"]
-        B --- S["Storage Layer\nMongoDB Atlas (Database)\nCloudinary CDN (Media)"]
-    end
-```
-
----
-
-### 3.2 Technology Comparison & Selection Rationale
-
-| Layer                  | Selected Technology        | Alternative Considered     | Why This Technology Was Chosen                                                                                                                             |
-| :--------------------- | :------------------------- | :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Frontend Framework** | **React 18 + TypeScript**  | Plain JavaScript / HTML    | Provides strict type safety, modular component architecture, and seamless management of complex UI states (heatmap opacity, interactive maps).             |
-| **Build Tool**         | **Vite**                   | Create React App / Webpack | Delivers instant server start and lightning-fast Hot Module Replacement (HMR) speeds up development by 10x.                                                |
-| **Backend Framework**  | **FastAPI**                | Flask / Django             | Supports native Python `async/await` non-blocking execution, delivering 3x-5x higher throughput for ML inference tasks compared to synchronous frameworks. |
-| **Neural Backbone**    | **EfficientNetV2-L**       | ResNet50 / VGG16           | Uses Fused-MBConv convolutions, offering superior feature extraction for fine-grained skin textures with 2.2x fewer parameters than ResNet152.             |
-| **Loss Function**      | **Multi-Class Focal Loss** | Standard Cross-Entropy     | Directly solves severe dataset class imbalance by down-weighting easy background samples and focusing gradient updates on hard lesions.                    |
-| **Database**           | **MongoDB Atlas**          | PostgreSQL / MySQL         | Flexible JSON document structure fits varying scan metadata naturally and offers native 2DSphere spatial indexes for doctor locator queries.               |
-| **Media Hosting**      | **Cloudinary CDN**         | Local Server Disk Storage  | Delivers globally cached, encrypted image delivery without consuming backend server storage or bandwidth.                                                  |
-
----
-
-## 📱 4. Page-by-Page Detailed Overview (All 10 Pages)
-
-```mermaid
-graph TD
-    App["Skin AI Application Pages"]
-
-    App --> Public["Public Pages"]
-    Public --> P1["1. Home.tsx (Landing & Overview)"]
-    Public --> P2["2. Login.tsx (User/Doctor Auth)"]
-    Public --> P3["3. Register.tsx (Account Sign Up)"]
-
-    App --> Patient["Core Patient Pages"]
-    Patient --> P4["4. Upload.tsx (Lesion Capture & Pre-Check)"]
-    Patient --> P5["5. Results.tsx (AI Heatmap & Diagnosis)"]
-    Patient --> P6["6. Dashboard.tsx (Scan History Timeline)"]
-
-    App --> Clinical["Doctor & Locator Pages"]
-    Clinical --> P7["7. Doctors.tsx (Geospatial Locator Map)"]
-    Clinical --> P8["8. DoctorPortal.tsx (Specialist Review)"]
-
-    App --> System["Admin & Account Pages"]
-    System --> P9["9. Admin.tsx (System Metrics Desk)"]
-    System --> P10["10. Profile.tsx (User Settings)"]
-```
+  <!-- Step 7: Final Result Card -->
+  <g>
+    <rect x="50" y="460" width="760" height="80" rx="8" fill="#065F46" stroke="#10B981" stroke-width="2"/>
+    <text x="430" y="485" fill="#A7F3D0" font-size="13" font-weight="bold" text-anchor="middle">STEP 7: FINAL DIAGNOSTIC RESULT &amp; ACTION RECOMMENDATION</text>
+    <text x="430" y="507" fill="#FFFFFF" font-size="10.5" text-anchor="middle">Outputs Primary Diagnosis + Interactive Heatmap Opacity Slider + PDF Report + Nearby Doctor Match</text>
+    <text x="430" y="525" fill="#6EE7B7" font-size="9.5" text-anchor="middle">Urgency Level: HIGH (Recommends immediate specialist consultation)</text>
+  </g>
+</svg>
+</div>
 
 ---
 
-### Page 1: `Home.tsx` (Landing & System Introduction)
+### 3.2 Detailed Explanation of How the Prediction Works
 
-- **Primary Goal:** Educate users, showcase system accuracy metrics, and provide an immediate Call-To-Action (CTA) to start a skin analysis.
-- **Key Visual Sections:**
-  - **Hero Header:** Dynamic typography with live statistics (**97.2% Accuracy**, **40,000+ Dataset Images**, **Instant Grad-CAM Heatmap**).
-  - **Interactive Scan Preview Widget:** Demonstrates how the AI overlays heatmaps on skin lesions.
-  - **Supported Conditions Grid:** Interactive cards detailing all 10 detectable skin diseases with risk levels.
-  - **3-Step How It Works:** Visual flowchart showing Upload $\rightarrow$ AI Diagnosis $\rightarrow$ Specialist Recommendation.
-  - **Multi-Language Switcher:** Instant UI translation toggle (English, Hindi, Gujarati).
-
----
-
-### Page 2: `Upload.tsx` (Skin Lesion Photo Upload & Pre-Validation)
-
-- **Primary Goal:** Capture high-quality skin lesion photos with real-time quality feedback.
-- **Key Visual Sections:**
-  - **Drag-and-Drop Dropzone:** Supports JPEG, PNG, and WebP uploads with file size limit enforcement.
-  - **Live Camera Integration:** Direct camera access for mobile and desktop devices.
-  - **Pre-Check Feedback Banner:** Instant visual alerts if an uploaded image is blurry, too dark, or under-resolution.
-  - **Interactive Crop & Zoom Tool:** Allows centering and cropping the lesion before submission.
-  - **Body Location Selector:** Dropdown to specify anatomical region (e.g., Face, Arm, Back, Torso).
+1. **Step 1: Input Image Capture:** The user uploads a photo of a skin lesion.
+2. **Step 2: Resizing & Normalization:** OpenCV resizes the image to a standardized $384 \times 384 \times 3$ RGB pixel tensor and normalizes color values.
+3. **Step 3: 5-Pass Test-Time Augmentation (TTA):** The model creates 5 subtle variations (original, flipped, rotated $+5^\circ$, $-5^\circ$, zoomed) and passes all 5 through the neural network to eliminate camera angle biases.
+4. **Step 4: Deep Feature Extraction (EfficientNetV2-L):**
+   - The image passes through **Fused-MBConv** convolutional blocks.
+   - The AI inspects key dermatological criteria (**ABCDE Rule**):
+     - **A - Asymmetry:** Is the lesion shape uneven?
+     - **B - Border Irregularity:** Are the edges jagged or blurry?
+     - **C - Color Variation:** Are there multiple shades (brown, black, red)?
+     - **D - Diameter & Texture:** Fine-grained texture analysis.
+5. **Step 5: Softmax Classification:** The output Dense layer converts feature representations into percentage probabilities across 10 disease classes (e.g., *Melanoma 92.4%*, *Melanocytic Nevi 5.1%*).
+6. **Step 6: Grad-CAM Explainable AI (XAI):** The model computes gradients of the top prediction score relative to the final convolutional feature map, outputting a thermal red/yellow activation heatmap showing *why* it made the prediction.
+7. **Step 7: Severity Check & Patient Output:** The system checks risk rules (Melanoma $>70\% \rightarrow$ **Severe Urgency**), generates a downloadable clinical PDF report with a verification QR code, and connects the user to nearby dermatologists via the Leaflet.js map.
 
 ---
 
-### Page 3: `Results.tsx` (Diagnostic Dashboard & Explainable AI)
-
-- **Primary Goal:** Display primary AI predictions, Grad-CAM heatmap visualizations, severity ratings, and medical guidance.
-- **Key Visual Sections:**
-  - **Primary Prediction Banner:** Displays top detected condition with confidence meter percentage.
-  - **Interactive Grad-CAM Heatmap Viewer:** Features an **Opacity Slider (0% to 100%)** allowing users to fade seamlessly between the original skin photo and the AI focus heatmap.
-  - **Differential Diagnosis Chart:** Visual bar chart showing top 3 class probability distributions.
-  - **Severity & Urgency Badge:** Color-coded status (**Green: Mild**, **Yellow: Moderate**, **Red: Severe / Critical**).
-  - **Medical Symptoms & Care Info:** Comprehensive description of causes, typical symptoms, and recommended next steps.
-  - **Action Controls:** Buttons to download the clinical PDF report or launch the nearby doctor finder map.
-
----
-
-### Page 4: `Doctors.tsx` (Geospatial Dermatologist Locator)
-
-- **Primary Goal:** Connect patients with nearby certified dermatologists and skin clinics.
-- **Key Visual Sections:**
-  - **Interactive Leaflet Map:** Displays clinic markers with interactive popups (Doctor Name, Specialty, Rating, Fee, Address).
-  - **GPS Geolocation Button:** Centers map instantly on user's live physical location.
-  - **Filter Toolbar:** Filter by specialty (_Dermato-Oncology_, _Pediatric Dermatology_, _General Dermatology_), rating (4.0+), or location.
-  - **Appointment Booking Modal:** Direct interface to send consultation requests with attached scan reports.
-
----
-
-### Page 5: `DoctorPortal.tsx` (Clinical Verification Dashboard)
-
-- **Primary Goal:** Allow verified medical specialists to review patient AI scans and confirm diagnoses.
-- **Key Visual Sections:**
-  - **Pending Verification Queue:** Chronological list of patient scans awaiting physician review.
-  - **Side-by-Side Diagnostic Viewer:** Shows original image, Grad-CAM heatmap, patient body location notes, and AI confidence breakdown.
-  - **Physician Review Form:** Options to confirm AI findings, adjust severity ratings, add clinical notes, and send verified reports to patients.
-
----
-
-### Page 6: `Dashboard.tsx` (Patient Medical History & Timeline)
-
-- **Primary Goal:** Give users a historical view of their past skin scans and health trends.
-- **Key Visual Sections:**
-  - **Scan History Cards:** Chronological list of past scans with thumbnail photos, dates, and primary diagnoses.
-  - **Health Trend Charts:** Graphical view of scan frequencies and detected condition history over time.
-  - **Report Re-Download Center:** One-click PDF download access for all past reports.
-
----
-
-### Page 7: `Admin.tsx` (System Administration & Analytics)
-
-- **Primary Goal:** System management dashboard for user control, doctor license verification, and API health monitoring.
-- **Key Visual Sections:**
-  - **API Telemetry Counters:** Real-time metrics showing API request rates, average inference latency (ms), and active DB connections.
-  - **Doctor Verification Desk:** Interface to inspect and approve submitted medical license documents.
-  - **Disease Knowledge Editor:** Interface to update disease descriptions, treatment notes, and translation strings.
-
----
-
-### Page 8: `Profile.tsx` (User Account & Preferences)
-
-- **Primary Goal:** Manage personal profile, security credentials, and application preferences.
-- **Key Visual Sections:**
-  - **Personal Details Form:** Age, gender, contact email, and general medical history notes.
-  - **Language & Theme Selector:** System preference controls for language (EN / HI / GU) and interface dark mode.
-
----
-
-### Page 9 & 10: `Login.tsx` / `Register.tsx` (Authentication Flows)
-
-- **Primary Goal:** Secure role-based access control for Patients, Doctors, and Administrators.
-- **Key Visual Sections:**
-  - **Role Selection Toggle:** Easily switch between Patient Account and Doctor Account registration.
-  - **Form Validation:** Real-time input checking and password strength meter.
-
----
-
-## 🧠 5. Machine Learning Model Architecture & Algorithms
-
----
-
-### 5.1 Model Structural Diagram
-
-```mermaid
-graph TD
-    classDef input fill:#7F8C8D,stroke:#34495E,color:#fff;
-    classDef aug fill:#D35400,stroke:#E67E22,color:#fff;
-    classDef backbone fill:#0F5E59,stroke:#0B423F,color:#fff;
-    classDef pool fill:#1D8B82,stroke:#0F5E59,color:#fff;
-    classDef dense fill:#2980B9,stroke:#1F618D,color:#fff;
-    classDef drop fill:#C0392B,stroke:#922B21,color:#fff;
-    classDef output fill:#27AE60,stroke:#1E8449,color:#fff;
-
-    InputImg["Input Image Tensor\n(384 x 384 x 3 RGB)"]:::input
-    InputImg --> AugGraph["Data Augmentation & Preprocessing Graph\n(MixUp, Random Flip, Rotation, Saturation)"]:::aug
-
-    AugGraph --> Backbone["EfficientNetV2-L Backbone\n(Pretrained ImageNet Weights / Fused-MBConv Blocks)"]:::backbone
-
-    Backbone --> GAP["Global Average Pooling 2D (GAP)\n(Feature Map Dimensionality Reduction)"]:::pool
-    GAP --> BN1["Batch Normalization Layer 1"]:::pool
-
-    BN1 --> Dense1["Dense Layer 1 (512 Units, GELU Activation)"]:::dense
-    Dense1 --> BN2["Batch Normalization Layer 2"]:::dense
-    Dense1 --> Drop1["Dropout Layer 1 (Rate: 0.40)"]:::drop
-
-    Drop1 --> Dense2["Dense Layer 2 (256 Units, GELU Activation)"]:::dense
-    Dense2 --> BN3["Batch Normalization Layer 3"]:::dense
-    Dense2 --> Drop2["Dropout Layer 2 (Rate: 0.24)"]:::drop
-
-    Drop2 --> OutHead["Softmax Classification Layer\n(11 Target Probability Classes)"]:::output
-```
-
----
-
-### 5.2 Dataset Volume & Class Distribution (40,197 Total Images)
-
-The dataset integrates medical image repositories from **ISIC**, **HAM10000**, and **DermNet**, totaling **40,197 curated images**.
-
-```mermaid
-pie title Dataset Disease Class Distribution (Total: 40,197 Images)
-    "Melanoma (15.75k)" : 15750
-    "Melanocytic Nevi (7.97k)" : 7970
-    "Basal Cell Carcinoma (3.32k)" : 3323
-    "Benign Keratosis (2.62k)" : 2624
-    "Warts / Viral (2.10k)" : 2103
-    "Psoriasis / Lichen (2.00k)" : 2000
-    "Seborrheic Keratoses (1.80k)" : 1800
-    "Tinea / Fungal (1.70k)" : 1700
-    "Eczema (1.68k)" : 1677
-    "Atopic Dermatitis (1.25k)" : 1250
-```
-
----
-
-### 5.3 Mathematical Loss Function & Optimization
-
-#### 1. Multi-Class Focal Loss ($\text{FL}$)
-
-To handle severe class imbalances (e.g., Melanoma 15.7k vs. Atopic Dermatitis 1.25k), standard cross-entropy is replaced by **Focal Loss**:
-
-$$\text{FL}(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
-
-- **$\gamma = 2.0$ (Focusing Parameter):** Down-weights easy background samples ($p_t \to 1$), forcing the network to focus gradient updates on hard, ambiguous lesion boundaries.
-- **$\alpha_t = 0.25$ (Class Weighting Factor):** Balances relative class frequency distributions.
-
-#### 2. Label Smoothing ($\epsilon = 0.1$)
-
-Prevents overconfidence in Softmax output logits:
-
-$$y_i^{\text{smooth}} = (1 - \epsilon) y_i + \frac{\epsilon}{K}$$
-
-#### 3. MixUp Data Augmentation ($\alpha = 0.2$)
-
-Blends image pairs and labels during training batches:
-
-$$\tilde{x} = \lambda x_i + (1 - \lambda) x_j, \quad \tilde{y} = \lambda y_i + (1 - \lambda) y_j$$
-
----
-
-### 5.4 Progressive 3-Phase Fine-Tuning Flow
+## 🛠️ 4. Technologies, Tools & Software Used (With Rationale)
 
 ```mermaid
 graph LR
-    P1["Phase 1: Head Warmup\nBackbone Frozen\nLR = 1e-3 (10 Epochs)"] --> P2["Phase 2: Partial Fine-Tune\nUnfreeze Top 60 Layers\nLR = 1e-5 (20 Epochs)"]
-    P2 --> P3["Phase 3: Deep Fine-Tune\nFull Network Unfrozen\nLR = 5e-7 (20 Epochs)"]
+    subgraph Frontend ["Frontend Layer"]
+        F1["React 18 SPA"]
+        F2["TypeScript 5.0"]
+        F3["Tailwind CSS"]
+        F4["Leaflet.js Map"]
+    end
+
+    subgraph Backend ["Backend Gateway"]
+        B1["FastAPI Async"]
+        B2["OpenCV Inspection"]
+        B3["ReportLab PDF"]
+    end
+
+    subgraph ML ["AI Engine"]
+        M1["TensorFlow 2.15"]
+        M2["EfficientNetV2-L"]
+        M3["Grad-CAM XAI"]
+    end
+
+    subgraph Storage ["Cloud Storage"]
+        S1["MongoDB Atlas"]
+        S2["Cloudinary CDN"]
+    end
+```
+
+| Technology | Role in Project | Why Used (Rationale) |
+| :--- | :--- | :--- |
+| **React 18 + TypeScript** | Client User Interface | Type-safe, component-based UI for interactive heatmap opacity sliders & doctor maps. |
+| **FastAPI (Python)** | Asynchronous Backend API | High-throughput `async/await` handling for non-blocking ML inference requests. |
+| **EfficientNetV2-L** | Neural Network Backbone | State-of-the-art accuracy on fine lesion textures with 2.2x fewer parameters than ResNet152. |
+| **OpenCV** | Quality Control & Heatmaps | Sharpness (blur) validation and colorizing Grad-CAM activation matrices. |
+| **MongoDB Atlas** | Database | Flexible document storage for scans with native 2DSphere spatial doctor search. |
+| **Cloudinary CDN** | Cloud Media Storage | Encrypted, globally cached image delivery for patient uploads and heatmaps. |
+
+---
+
+## 📱 5. Overview of All 10 Application Pages
+
+```mermaid
+graph TD
+    App["Skin AI Web Application"]
+    App --> P1["1. Home.tsx (Landing & Overview)"]
+    App --> P2["2. Upload.tsx (Photo Capture & Quality Check)"]
+    App --> P3["3. Results.tsx (AI Heatmap & Diagnosis)"]
+    App --> P4["4. Doctors.tsx (Geospatial Doctor Locator Map)"]
+    App --> P5["5. DoctorPortal.tsx (Clinical Specialist Review)"]
+    App --> P6["6. Dashboard.tsx (Patient History Timeline)"]
+    App --> P7["7. Admin.tsx (System Governance Desk)"]
+    App --> P8["8. Profile.tsx (User Settings)"]
+    App --> P9["9. Login.tsx (Authentication)"]
+    App --> P10["10. Register.tsx (Account Sign Up)"]
 ```
 
 ---
 
-### 5.5 Real Validation & Test Performance Results
+## 📄 6. Summary & Conclusion
 
-| Training Phase                  | Training Accuracy | Validation Accuracy | Test Accuracy (Single Pass) | Test Accuracy (5-Pass TTA) |
-| :------------------------------ | :---------------: | :-----------------: | :-------------------------: | :------------------------: |
-| **Phase 1 (Warmup)**            |       84.2%       |        82.1%        |            81.5%            |           83.0%            |
-| **Phase 2 (Partial Fine-Tune)** |       94.6%       |        93.1%        |            92.4%            |           94.0%            |
-| **Phase 3 (Deep Fine-Tune)**    |     **98.4%**     |      **96.8%**      |          **95.9%**          |         **97.2%**          |
-
-#### Per-Class Diagnostic Performance Summary:
-
-| Disease Class                        | Precision | Recall | F1-Score |
-| :----------------------------------- | :-------: | :----: | :------: |
-| **1. Eczema**                        |   0.95    |  0.94  |  0.945   |
-| **2. Melanoma**                      |   0.98    |  0.97  |  0.975   |
-| **3. Atopic Dermatitis**             |   0.93    |  0.92  |  0.925   |
-| **4. Basal Cell Carcinoma (BCC)**    |   0.97    |  0.96  |  0.965   |
-| **5. Melanocytic Nevi (NV)**         |   0.98    |  0.99  |  0.985   |
-| **6. Benign Keratosis-like Lesions** |   0.94    |  0.95  |  0.945   |
-| **7. Psoriasis / Lichen Planus**     |   0.95    |  0.94  |  0.945   |
-| **8. Seborrheic Keratoses**          |   0.96    |  0.95  |  0.955   |
-| **9. Tinea / Fungal Infections**     |   0.97    |  0.96  |  0.965   |
-| **10. Warts / Viral Infections**     |   0.96    |  0.96  |  0.960   |
-| **Healthy Skin Baseline**            |   0.99    |  0.99  |  0.990   |
-
----
-
-## 🔒 6. Security, Rate Limiting & Verification Infrastructure
-
-1. **SlowAPI Endpoint Rate Limiting:**
-   - Inference API (`/api/v1/predict`): Limited to **10 requests / minute** per IP address.
-   - Auth APIs (`/api/v1/auth/*`): Limited to **5 attempts / minute** to block brute-force attacks.
-2. **Medical PDF Verification QR Codes:**
-   - Generated PDFs contain a unique verification QR code pointing to `/api/v1/reports/verify/{report_id}` to prevent document forgery.
-3. **Strict Origin Security (CORS):**
-   - FastAPI gateway blocks unauthorized domain requests.
-
----
-
-## 🚀 7. System Execution & Launch Guide
-
-Run the full system stack with a single batch command on Windows:
-
-```cmd
-d:\Skin Disease AI\skin-disease-ai\start.bat
-```
-
-Or execute individual backend/frontend services:
-
-```bash
-# 1. Launch FastAPI Backend Gateway (Port 8000)
-cd skin-disease-ai/backend
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-
-# 2. Launch React Frontend Client (Port 5173)
-cd skin-disease-ai/frontend
-npm run dev
-```
-
----
-
-## 📄 Summary & Conclusion
-
-This document forms the complete, non-code architectural specification for the **AI Skin Disease Detection System**. Through visual diagrams, conceptual workflows, and mathematical explanations, it details how data flows safely from client input to deep learning prediction, explainable visual heatmaps, and doctor recommendation routing.
+This document provides the complete, easy-to-understand, visual guide to the **AI Skin Disease Detection Platform**. Through intuitive visual diagrams, step-by-step model prediction flowcharts, and clear technical explanations, it demonstrates how skin images are processed safely from upload to AI prediction, visual heatmap explainability, and doctor recommendation routing.
