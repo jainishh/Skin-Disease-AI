@@ -105,12 +105,21 @@ export default function Dashboard() {
   ]);
   const [activeTab, setActiveTab] = useState<"home" | "scans" | "compare" | "ocr" | "profile" | "favorites" | "messages">("home");
 
+  const favKey = user?.id ? `favorite_doctors_${user.id}` : "favorite_doctors_guest";
+  const apptKey = user?.id ? `appointments_${user.id}` : "appointments_guest";
+  const profileKey = user?.id ? `patientProfile_${user.id}` : "patientProfile_guest";
+
   const [patientProfile, setPatientProfile] = useState(() => {
-    const saved = localStorage.getItem("patientProfile");
+    const saved = localStorage.getItem(profileKey);
     return saved ? JSON.parse(saved) : {
       age: 28, gender: "Male", bloodGroup: "O+", allergies: "None", medicalHistory: "None"
     };
   });
+
+  useEffect(() => {
+    const saved = localStorage.getItem(profileKey);
+    if (saved) setPatientProfile(JSON.parse(saved));
+  }, [profileKey]);
 
   const [selectedCompareScans, setSelectedCompareScans] = useState<[HistoryItem | null, HistoryItem | null]>([null, null]);
   const [compareSliderPos, setCompareSliderPos] = useState(50);
@@ -119,7 +128,7 @@ export default function Dashboard() {
 
   const handleProfileSave = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("patientProfile", JSON.stringify(patientProfile));
+    localStorage.setItem(profileKey, JSON.stringify(patientProfile));
     alert("Profile saved successfully.");
   };
 
@@ -168,9 +177,9 @@ export default function Dashboard() {
   };
 
   const [medications, setMedications] = useState([
-    { id: "med-1", name: "Tacrolimus Ointment 0.03%", dosage: "Apply twice daily", time: "Morning & Night", taken: false },
-    { id: "med-2", name: "Desloratadine 5mg", dosage: "1 tablet daily", time: "Night", taken: true },
-    { id: "med-3", name: "Cetaphil Gentle Moisturizer", dosage: "Liberal application", time: "Post-bath", taken: false },
+    { id: "med-1", nameKey: "tacrolimus", dosageKey: "tacrolimus_dosage", timeKey: "time_morning_night", defaultName: "Tacrolimus Ointment 0.03%", defaultDosage: "Apply twice daily", defaultTime: "Morning & Night", taken: false },
+    { id: "med-2", nameKey: "desloratadine", dosageKey: "desloratadine_dosage", timeKey: "time_night", defaultName: "Desloratadine 5mg", defaultDosage: "1 tablet daily", defaultTime: "Night", taken: true },
+    { id: "med-3", nameKey: "cetaphil", dosageKey: "cetaphil_dosage", timeKey: "time_post_bath", defaultName: "Cetaphil Gentle Moisturizer", defaultDosage: "Liberal application", defaultTime: "Post-bath", taken: false },
   ]);
 
   const handleToggleMedication = (id: string) => {
@@ -244,19 +253,19 @@ export default function Dashboard() {
     e.stopPropagation();
     if (!docId) return;
 
-    const saved = localStorage.getItem("favorite_doctors");
+    const saved = localStorage.getItem(favKey);
     const favIds: string[] = saved ? JSON.parse(saved) : [];
     let updated: string[];
 
     if (favIds.includes(docId)) {
       updated = favIds.filter((id) => id !== docId);
-      apiClient.delete(`/doctors/favorites/${docId}`).catch((err) => console.error(err));
+      if (user?.id) apiClient.delete(`/doctors/favorites/${docId}`).catch((err) => console.error(err));
     } else {
       updated = Array.from(new Set([...favIds, docId]));
-      apiClient.post(`/doctors/favorites/${docId}`).catch((err) => console.error(err));
+      if (user?.id) apiClient.post(`/doctors/favorites/${docId}`).catch((err) => console.error(err));
     }
 
-    localStorage.setItem("favorite_doctors", JSON.stringify(updated));
+    localStorage.setItem(favKey, JSON.stringify(updated));
     setFavoriteDoctors((prev) => prev.filter((d) => updated.includes(d.id || (d as any)._id)));
   };
 
@@ -268,24 +277,46 @@ export default function Dashboard() {
       .catch((err) => console.error("Error fetching history:", err))
       .finally(() => setLoading(false));
 
-    // Fetch local appointments
-    const appts = localStorage.getItem("appointments");
-    if (appts) setAppointments(JSON.parse(appts));
+    // Fetch local appointments (account-scoped)
+    const appts = localStorage.getItem(apptKey);
+    setAppointments(appts ? JSON.parse(appts) : []);
 
-    // Fetch favorite doctors (deduplicated)
-    const favIdsStr = localStorage.getItem("favorite_doctors");
-    const ids: string[] = favIdsStr ? Array.from(new Set(JSON.parse(favIdsStr) as string[])) : [];
-    apiClient.get<Doctor[]>("/doctors").then((res) => {
-      const doctorMap = new Map<string, Doctor>();
-      res.data.forEach((doc) => {
-        const docId = doc.id || (doc as any)._id;
-        if (ids.includes(docId) && !doctorMap.has(docId)) {
-          doctorMap.set(docId, doc);
-        }
-      });
-      setFavoriteDoctors(Array.from(doctorMap.values()));
-    }).catch((err) => console.error("Error fetching doctors:", err));
-  }, [activeTab]);
+    const loadDoctorsForIds = (ids: string[]) => {
+      if (!ids || ids.length === 0) {
+        setFavoriteDoctors([]);
+        return;
+      }
+      apiClient.get<Doctor[]>("/doctors").then((res) => {
+        const doctorMap = new Map<string, Doctor>();
+        res.data.forEach((doc) => {
+          const docId = doc.id || (doc as any)._id;
+          if (ids.includes(docId) && !doctorMap.has(docId)) {
+            doctorMap.set(docId, doc);
+          }
+        });
+        setFavoriteDoctors(Array.from(doctorMap.values()));
+      }).catch((err) => console.error("Error fetching doctors:", err));
+    };
+
+    // Sync favorite doctors from backend if logged in, else account-scoped localStorage
+    if (user?.id) {
+      apiClient.get<{ favorite_doctors: string[] }>("/doctors/favorites")
+        .then((res) => {
+          const ids = res.data.favorite_doctors || [];
+          localStorage.setItem(favKey, JSON.stringify(ids));
+          loadDoctorsForIds(ids);
+        })
+        .catch(() => {
+          const favIdsStr = localStorage.getItem(favKey);
+          const ids = favIdsStr ? (JSON.parse(favIdsStr) as string[]) : [];
+          loadDoctorsForIds(ids);
+        });
+    } else {
+      const favIdsStr = localStorage.getItem(favKey);
+      const ids = favIdsStr ? (JSON.parse(favIdsStr) as string[]) : [];
+      loadDoctorsForIds(ids);
+    }
+  }, [activeTab, user?.id, favKey, apptKey]);
 
   // Vitals dummy datasets matching reference curves
   const hydrationData = [
@@ -321,8 +352,9 @@ export default function Dashboard() {
   function handleCancelAppointment(id: string) {
     const updated = appointments.filter((a) => a.id !== id);
     setAppointments(updated);
-    localStorage.setItem("appointments", JSON.stringify(updated));
+    localStorage.setItem(apptKey, JSON.stringify(updated));
   }
+
 
   async function handleSendChatMessage(e?: React.FormEvent) {
     if (e) e.preventDefault();
@@ -684,7 +716,7 @@ export default function Dashboard() {
                   <div className="flex items-center justify-between">
                     <h2 className="text-xl font-bold tracking-tight text-[var(--brand-text)]">{t('dashboard.top_specialists')}</h2>
                     <Link to="/doctors" className="text-xs font-bold text-[var(--brand-primary)] hover:underline flex items-center gap-1">
-                      View All Specialists <ChevronRight size={14} />
+                      {t('dashboard.view_all_specialists', { defaultValue: 'View All Specialists' })} <ChevronRight size={14} />
                     </Link>
                   </div>
                   
@@ -1286,12 +1318,16 @@ export default function Dashboard() {
                       </div>
                       <div>
                         <p className={`text-xs font-semibold ${med.taken ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-[#CBD5E1]"}`}>
-                          {med.name}
+                          {t(`medications.${med.nameKey}`, { defaultValue: med.defaultName })}
                         </p>
-                        <p className="text-[10px] text-[var(--brand-text-muted)] mt-0.5">{med.dosage}</p>
+                        <p className="text-[10px] text-[var(--brand-text-muted)] mt-0.5">
+                          {t(`medications.${med.dosageKey}`, { defaultValue: med.defaultDosage })}
+                        </p>
                       </div>
                     </div>
-                    <span className="text-[9px] bg-[var(--brand-surface-elevated)] border border-[var(--brand-border)] text-[var(--brand-text-muted)] px-2 py-1 rounded-lg font-medium">{med.time}</span>
+                    <span className="text-[9px] bg-[var(--brand-surface-elevated)] border border-[var(--brand-border)] text-[var(--brand-text-muted)] px-2 py-1 rounded-lg font-medium">
+                      {t(`medications.${med.timeKey}`, { defaultValue: med.defaultTime })}
+                    </span>
                   </div>
                 ))}
               </div>

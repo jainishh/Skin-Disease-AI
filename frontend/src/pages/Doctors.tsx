@@ -5,6 +5,7 @@ import { Search, MapPin, Phone, Clock, Star, Heart, Calendar, AlertCircle, Navig
 import { apiClient } from "../api/client";
 import { Doctor } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
 import { STATE_MAP_DATA } from "./india_map_constant";
 
@@ -35,7 +36,11 @@ const SUGGESTED_CITIES = [
 
 export default function Doctors() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const locationState = useLocation().state as { city?: string } | null;
+
+  const favKey = user?.id ? `favorite_doctors_${user.id}` : "favorite_doctors_guest";
+  const apptKey = user?.id ? `appointments_${user.id}` : "appointments_guest";
 
   const [activeTab, setActiveTab] = useState<"doctors" | "hospitals">("doctors");
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -70,10 +75,25 @@ export default function Doctors() {
   }, []);
 
   useEffect(() => {
-    // Load favorites from localStorage
-    const saved = localStorage.getItem("favorite_doctors");
-    if (saved) setFavorites(JSON.parse(saved));
-  }, []);
+    // Sync favorites from backend if logged in, fallback to account-scoped localStorage
+    if (user?.id) {
+      apiClient.get<{ favorite_doctors: string[] }>("/doctors/favorites")
+        .then((res) => {
+          const ids = res.data.favorite_doctors || [];
+          setFavorites(ids);
+          localStorage.setItem(favKey, JSON.stringify(ids));
+        })
+        .catch(() => {
+          const saved = localStorage.getItem(favKey);
+          if (saved) setFavorites(JSON.parse(saved));
+          else setFavorites([]);
+        });
+    } else {
+      const saved = localStorage.getItem(favKey);
+      if (saved) setFavorites(JSON.parse(saved));
+      else setFavorites([]);
+    }
+  }, [user?.id, favKey]);
 
   useEffect(() => {
     // Fetch doctors
@@ -103,12 +123,14 @@ export default function Doctors() {
     setFavorites((prev) => {
       const isFav = prev.includes(docId);
       const updated = isFav ? prev.filter((id) => id !== docId) : Array.from(new Set([...prev, docId]));
-      localStorage.setItem("favorite_doctors", JSON.stringify(updated));
+      localStorage.setItem(favKey, JSON.stringify(updated));
 
-      if (isFav) {
-        apiClient.delete(`/doctors/favorites/${docId}`).catch(err => console.error(err));
-      } else {
-        apiClient.post(`/doctors/favorites/${docId}`).catch(err => console.error(err));
+      if (user?.id) {
+        if (isFav) {
+          apiClient.delete(`/doctors/favorites/${docId}`).catch(err => console.error(err));
+        } else {
+          apiClient.post(`/doctors/favorites/${docId}`).catch(err => console.error(err));
+        }
       }
       return updated;
     });
@@ -130,11 +152,11 @@ export default function Doctors() {
       created_at: new Date().toISOString(),
     };
 
-    // Save in localStorage
-    const current = localStorage.getItem("appointments");
+    // Save in account-scoped localStorage
+    const current = localStorage.getItem(apptKey);
     const list = current ? JSON.parse(current) : [];
     list.push(newAppt);
-    localStorage.setItem("appointments", JSON.stringify(list));
+    localStorage.setItem(apptKey, JSON.stringify(list));
 
     setBookingSuccess(true);
     setTimeout(() => {
@@ -144,17 +166,18 @@ export default function Doctors() {
     }, 2000);
   }
 
+
   return (
     <div className="relative z-10 mx-auto mt-6 max-w-6xl px-6 pb-20 font-body text-[var(--brand-text)] transition-colors duration-300">
       
       {/* Header */}
       <div className="border-b border-[var(--brand-border)] pb-6 mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] text-xs font-bold mb-3 border border-[var(--brand-primary)]/20">
-          <Shield size={13} /> {t('dashboard.top_specialists') || "Clinical Directory"}
+          <Shield size={13} /> {t("doctors_page.title")}
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--brand-text)]">Healthcare Directory</h1>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--brand-text)]">{t("doctors_page.title")}</h1>
         <p className="mt-1.5 text-[var(--brand-text-muted)] text-sm max-w-2xl">
-          Locate licensed dermatologists, specialized skin clinics, and clinical resources across Indian states.
+          {t("doctors_page.subtitle")}
         </p>
       </div>
 
@@ -166,14 +189,14 @@ export default function Doctors() {
           
           {/* Search filters */}
           <div className="bg-[var(--brand-surface)] border-2 border-[var(--brand-border)] rounded-[2.5rem] p-5 shadow-sm space-y-4">
-            <h3 className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-text-muted)]">Location Filters</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-text-muted)]">{t("doctors_page.location_filters")}</h3>
             
             <div className="space-y-4">
               <div className="relative" ref={suggestionsRef}>
                 <div className="flex items-center bg-[var(--brand-surface-elevated)] border-2 border-[var(--brand-border)] rounded-2xl px-3.5 py-2.5 shadow-xs focus-within:border-[var(--brand-primary)] focus-within:ring-4 focus-within:ring-[var(--brand-primary)]/10 transition">
                   <Search className="text-[var(--brand-text-muted)] shrink-0 mr-2.5 pointer-events-none" size={16} />
                   <input
-                    placeholder="Search by city (e.g. Mumbai)"
+                    placeholder={t("doctors_page.search_city_placeholder")}
                     value={city}
                     onChange={(e) => {
                       setCity(e.target.value);
@@ -188,7 +211,7 @@ export default function Doctors() {
                   <div className="absolute z-50 left-0 right-0 mt-2 p-3 bg-[var(--brand-surface)] border-2 border-[var(--brand-border)] rounded-2xl shadow-xl max-h-60 overflow-y-auto">
                     {city.trim() === "" ? (
                       <div>
-                        <p className="text-[9px] font-bold text-[var(--brand-text-muted)] uppercase tracking-wider mb-2">Suggested Cities</p>
+                        <p className="text-[9px] font-bold text-[var(--brand-text-muted)] uppercase tracking-wider mb-2">{t("doctors_page.suggested_cities")}</p>
                         <div className="grid grid-cols-2 gap-1.5">
                           {POPULAR_CITIES.map((item) => (
                             <button
@@ -213,7 +236,7 @@ export default function Doctors() {
                         );
                         return filteredCities.length > 0 ? (
                           <div className="space-y-1">
-                            <p className="text-[9px] font-bold text-[var(--brand-text-muted)] uppercase tracking-wider mb-2">Suggested Matches</p>
+                            <p className="text-[9px] font-bold text-[var(--brand-text-muted)] uppercase tracking-wider mb-2">{t("doctors_page.suggested_matches")}</p>
                             {filteredCities.map((cityName) => (
                               <button
                                 key={cityName}
@@ -231,7 +254,7 @@ export default function Doctors() {
                             ))}
                           </div>
                         ) : (
-                          <p className="text-[10px] text-[var(--brand-text-muted)] text-center py-2">No suggested cities match</p>
+                          <p className="text-[10px] text-[var(--brand-text-muted)] text-center py-2">{t("doctors_page.no_suggested_cities")}</p>
                         );
                       })()
                     )}
@@ -240,7 +263,7 @@ export default function Doctors() {
               </div>
               
               <div>
-                <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1.5 ml-1">State Selection</label>
+                <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1.5 ml-1">{t("doctors_page.state_selection")}</label>
                 <select
                   value={selectedState}
                   onChange={(e) => {
@@ -249,7 +272,7 @@ export default function Doctors() {
                   }}
                   className="w-full rounded-2xl border-2 border-[var(--brand-border)] p-2.5 text-xs outline-none focus:border-[var(--brand-primary)] bg-[var(--brand-surface-elevated)] text-[var(--brand-text)] transition cursor-pointer"
                 >
-                  <option value="">All States</option>
+                  <option value="">{t("doctors_page.all_states")}</option>
                   {ACTIVE_STATES.map((stateName) => (
                     <option key={stateName} value={stateName}>{stateName}</option>
                   ))}
@@ -260,7 +283,7 @@ export default function Doctors() {
 
           {/* Interactive State Map */}
           <div className="bg-[var(--brand-surface)] border-2 border-[var(--brand-border)] rounded-[2.5rem] p-5 shadow-sm space-y-3">
-            <h3 className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-text-muted)]">Interactive States</h3>
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-[var(--brand-text-muted)]">{t("doctors_page.interactive_states")}</h3>
             
             <div className="flex items-center justify-center bg-gradient-to-b from-[var(--brand-primary)]/5 to-[var(--brand-secondary)]/10 rounded-3xl border-2 border-[var(--brand-border)] p-4 h-64 shadow-inner overflow-hidden">
               <svg viewBox="0 0 612 696" className="w-full h-full max-h-56 filter drop-shadow-md">
@@ -299,7 +322,7 @@ export default function Doctors() {
             </div>
 
             <div className="text-[10px] text-[var(--brand-text-muted)] font-medium leading-normal text-center border border-[var(--brand-border)] py-2 px-3 bg-[var(--brand-surface-elevated)] rounded-2xl">
-              💡 Click any state to filter. Highlighted teal states have active clinics.
+              {t("doctors_page.map_hint")}
             </div>
           </div>
         </div>
@@ -310,8 +333,8 @@ export default function Doctors() {
           {/* Tab selector */}
           <div className="flex border-b-2 border-[var(--brand-border)] font-semibold gap-2">
             {[
-              { id: "doctors", label: `Dermatologists (${doctors.length})` },
-              { id: "hospitals", label: `Clinical Centers (${hospitals.length})` }
+              { id: "doctors", label: `${t("doctors_page.dermatologists")} (${doctors.length})` },
+              { id: "hospitals", label: `${t("doctors_page.clinical_centers")} (${hospitals.length})` }
             ].map((tab) => {
               const active = activeTab === tab.id;
               return (
@@ -365,7 +388,7 @@ export default function Doctors() {
                         <div className="flex items-center gap-1 mt-1.5 text-xs text-amber-500 font-semibold">
                           <span>★</span>
                           <span className="text-[var(--brand-text)] font-bold">{doc.rating}</span>
-                          <span className="text-[var(--brand-text-muted)] text-[10px]">({doc.reviews_count} reviews)</span>
+                          <span className="text-[var(--brand-text-muted)] text-[10px]">({doc.reviews_count} {t("dashboard.reviews") || "reviews"})</span>
                         </div>
                         
                         <div className="space-y-2.5 mt-4 text-xs text-[var(--brand-text-muted)]">
@@ -389,13 +412,13 @@ export default function Doctors() {
                           onClick={() => setShowAppointmentModal(doc)}
                           className="flex-1 flex items-center justify-center gap-1.5 text-xs bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white rounded-2xl py-2.5 font-bold shadow-xs transition"
                         >
-                          <Calendar size={13} /> Book Appointment
+                          <Calendar size={13} /> {t("doctors_page.book_dermatologist")}
                         </button>
                       </div>
                     </motion.div>
                   ))
                 ) : (
-                  <p className="col-span-2 text-center py-12 text-[var(--brand-text-muted)] text-xs">No dermatologists found matching criteria.</p>
+                  <p className="col-span-2 text-center py-12 text-[var(--brand-text-muted)] text-xs">{t("doctors_page.no_dermatologists")}</p>
                 )
               ) : (
                 hospitals.length > 0 ? (
@@ -443,19 +466,19 @@ export default function Doctors() {
                           rel="noopener noreferrer"
                           className="flex-1 flex items-center justify-center gap-1 text-xs border border-[var(--brand-border)] text-[var(--brand-text)] rounded-2xl py-2.5 font-bold hover:bg-[var(--brand-surface-elevated)] transition text-center"
                         >
-                          <Navigation size={12} /> Directions
+                          <Navigation size={12} /> {t("doctors_page.directions")}
                         </a>
                         <button
                           onClick={() => setShowAppointmentModal(hos)}
                           className="flex-1 flex items-center justify-center gap-1 text-xs bg-[var(--brand-primary)] text-white rounded-2xl py-2.5 font-bold hover:bg-[var(--brand-primary-hover)] transition"
                         >
-                          <Calendar size={13} /> Request Care
+                          <Calendar size={13} /> {t("doctors_page.request_care")}
                         </button>
                       </div>
                     </motion.div>
                   ))
                 ) : (
-                  <p className="col-span-2 text-center py-12 text-[var(--brand-text-muted)] text-xs">No clinical centers found matching criteria.</p>
+                  <p className="col-span-2 text-center py-12 text-[var(--brand-text-muted)] text-xs">{t("doctors_page.no_hospitals")}</p>
                 )
               )}
             </AnimatePresence>
@@ -482,7 +505,7 @@ export default function Doctors() {
               </button>
 
               <h3 className="text-xl font-bold text-[var(--brand-text)] tracking-tight">
-                {activeTab === "doctors" ? "Book Dermatologist" : "Request Clinic Visit"}
+                {activeTab === "doctors" ? t("doctors_page.book_dermatologist") : t("doctors_page.request_visit")}
               </h3>
               <p className="text-[10px] text-[var(--brand-text-muted)] mt-1 uppercase font-bold tracking-wider">Provider: {showAppointmentModal.name}</p>
 
@@ -491,13 +514,13 @@ export default function Doctors() {
                   <motion.div initial={{ scale: 0.8 }} animate={{ scale: [1, 1.2, 1] }} className="rounded-full bg-[var(--brand-success)]/10 p-3 text-[var(--brand-success)]">
                     <Check size={28} strokeWidth={3} />
                   </motion.div>
-                  <span className="text-sm font-bold">Appointment Booked!</span>
-                  <p className="text-xs text-[var(--brand-text-muted)] font-normal">Your schedule has been synchronized to the dashboard.</p>
+                  <span className="text-sm font-bold">{t("doctors_page.booking_success")}</span>
+                  <p className="text-xs text-[var(--brand-text-muted)] font-normal">{t("doctors_page.booking_success_desc")}</p>
                 </div>
               ) : (
                 <form onSubmit={handleBookAppointment} className="mt-5 space-y-4 text-xs">
                   <div>
-                    <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">Patient Full Name</label>
+                    <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">{t("doctors_page.patient_name")}</label>
                     <input
                       required
                       type="text"
@@ -507,7 +530,7 @@ export default function Doctors() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">Contact Phone</label>
+                    <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">{t("doctors_page.phone")}</label>
                     <input
                       required
                       type="tel"
@@ -518,7 +541,7 @@ export default function Doctors() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">Date</label>
+                      <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">{t("doctors_page.date")}</label>
                       <input
                         required
                         type="date"
@@ -528,7 +551,7 @@ export default function Doctors() {
                       />
                     </div>
                     <div>
-                      <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">Time</label>
+                      <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">{t("doctors_page.time")}</label>
                       <input
                         required
                         type="time"
@@ -539,7 +562,7 @@ export default function Doctors() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">Clinical Notes</label>
+                    <label className="block text-[9px] font-bold text-[var(--brand-text-muted)] uppercase mb-1 ml-1">{t("doctors_page.clinical_notes")}</label>
                     <textarea
                       rows={2}
                       value={appointmentForm.notes}
@@ -554,7 +577,7 @@ export default function Doctors() {
                       type="submit"
                       className="flex-1 py-3.5 bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white rounded-2xl font-bold shadow-md transition"
                     >
-                      Confirm Booking
+                      {t("doctors_page.confirm_booking")}
                     </button>
                   </div>
                 </form>
@@ -567,9 +590,9 @@ export default function Doctors() {
       {/* Disclaimer */}
       <div className="mx-auto mt-16 max-w-lg border-t border-[var(--brand-border)] pt-5 text-[10px] text-[var(--brand-text-muted)] leading-relaxed text-center">
         <p className="flex items-center justify-center gap-1 font-semibold text-[var(--brand-text-muted)] mb-1">
-          <Shield size={12} /> Medical Referral Disclaimer
+          <Shield size={12} /> {t("doctors_page.disclaimer_title")}
         </p>
-        Doctor information lists represent educational registries. Directory mappings do not constitute endorsed diagnostic recommendations.
+        {t("doctors_page.disclaimer_desc")}
       </div>
 
     </div>

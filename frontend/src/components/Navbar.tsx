@@ -24,6 +24,7 @@ import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import ProfileModal from "./ProfileModal";
+import { apiClient } from "../api/client";
 
 const LANGS = [
   { code: "en", label: "EN" },
@@ -33,7 +34,7 @@ const LANGS = [
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,6 +52,15 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const notifRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+
+  const handleLanguageChange = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    if (user) {
+      updateUser({ preferred_language: langCode });
+      apiClient.patch("/auth/profile", { preferred_language: langCode }).catch(() => {});
+    }
+  };
+
 
   // Load appointments notifications
   useEffect(() => {
@@ -144,10 +154,10 @@ export default function Navbar() {
   }
 
   const navLinks = [
-    { to: "/", icon: <Home size={15} />, label: "Home" },
-    { to: "/upload", icon: <Scan size={15} />, label: "Scan & Analyze" },
-    { to: "/dashboard", icon: <LayoutDashboard size={15} />, label: "Dashboard" },
-    { to: "/doctors", icon: <Stethoscope size={15} />, label: "Find Doctors" },
+    { to: "/", icon: <Home size={15} />, label: t("nav.home") },
+    { to: "/upload", icon: <Scan size={15} />, label: t("nav.upload") },
+    { to: "/dashboard", icon: <LayoutDashboard size={15} />, label: t("nav.dashboard") },
+    { to: "/doctors", icon: <Stethoscope size={15} />, label: t("nav.doctors") },
   ];
 
   const isGuestUpload = location.pathname === "/upload" && (new URLSearchParams(location.search).get("guest") === "true" || !user);
@@ -175,10 +185,10 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-lg tracking-tight text-[var(--brand-text)] group-hover:text-[var(--brand-primary)] transition">
-              DermaScan AI
+              {t("app_name")}
             </span>
             <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--brand-secondary)]">
-              Clinical Intelligence
+              {t("nav.clinical_intelligence")}
             </span>
           </div>
         </Link>
@@ -244,14 +254,14 @@ export default function Navbar() {
                 >
                   <div className="flex items-center justify-between border-b border-[var(--brand-border)] pb-2.5 mb-2.5">
                     <span className="text-xs font-bold text-[var(--brand-text)] flex items-center gap-1.5">
-                      <Bell size={13} className="text-[var(--brand-primary)]" /> Clinical Alert Center
+                      <Bell size={13} className="text-[var(--brand-primary)]" /> {t("nav.alert_center")}
                     </span>
                     {notifications.length > 0 && (
                       <button
                         onClick={() => setNotifications([])}
                         className="text-[10px] font-bold text-[var(--brand-text-muted)] hover:text-[var(--brand-error)] transition uppercase"
                       >
-                        Clear all
+                        {t("nav.clear_all")}
                       </button>
                     )}
                   </div>
@@ -259,7 +269,7 @@ export default function Navbar() {
                   <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
                     {notifications.length === 0 ? (
                       <p className="text-xs text-[var(--brand-text-muted)] py-4 text-center">
-                        All clinical notifications cleared ✨
+                        {t("nav.all_cleared")}
                       </p>
                     ) : (
                       notifications.map((note, i) => (
@@ -316,7 +326,7 @@ export default function Navbar() {
               return (
                 <button
                   key={l.code}
-                  onClick={() => i18n.changeLanguage(l.code)}
+                  onClick={() => handleLanguageChange(l.code)}
                   className={`px-2.5 py-1 rounded-full transition-all duration-150 ${
                     active
                       ? "bg-[var(--brand-primary)] text-white shadow-sm font-bold"
@@ -376,13 +386,13 @@ export default function Navbar() {
 
                     <div className="space-y-2 text-xs text-[var(--brand-text-muted)] mb-4">
                       <div className="flex justify-between py-1 border-b border-[var(--brand-border)]/50">
-                        <span>Language:</span>
-                        <span className="font-semibold text-[var(--brand-text)] uppercase">{user.preferred_language || "en"}</span>
+                        <span>{t("common.language")}:</span>
+                        <span className="font-semibold text-[var(--brand-text)] uppercase">{(i18n.language || "en").toUpperCase()}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[var(--brand-border)]/50">
-                        <span>Account Status:</span>
+                        <span>{t("dashboard.account_status")}:</span>
                         <span className="font-semibold text-[var(--brand-success)] flex items-center gap-1">
-                          <Check size={12} /> Verified
+                          <Check size={12} /> {t("dashboard.verified")}
                         </span>
                       </div>
                     </div>
@@ -393,14 +403,7 @@ export default function Navbar() {
                         onClick={() => setShowProfileModal(false)}
                         className="w-full flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] transition cursor-pointer shadow-xs"
                       >
-                        <User size={14} /> My Profile
-                      </Link>
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setShowProfileModal(false)}
-                        className="w-full flex items-center justify-center gap-2 rounded-xl py-2 text-xs font-semibold bg-[var(--brand-bg)] border border-[var(--brand-border)] text-[var(--brand-text)] hover:bg-[var(--brand-surface-hover)] transition"
-                      >
-                        <LayoutDashboard size={14} /> My Dashboard
+                        <User size={14} /> {t("dashboard.my_profile")}
                       </Link>
                       <button
                         onClick={() => {
@@ -410,7 +413,7 @@ export default function Navbar() {
                         }}
                         className="w-full flex items-center justify-center gap-2 rounded-xl py-2 text-xs font-semibold text-[var(--brand-error)] bg-[var(--brand-error)]/10 hover:bg-[var(--brand-error)]/20 transition cursor-pointer"
                       >
-                        <LogOut size={14} /> Log Out
+                        <LogOut size={14} /> {t("nav.logout")}
                       </button>
                     </div>
                   </motion.div>

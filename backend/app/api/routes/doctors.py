@@ -33,10 +33,18 @@ async def list_hospitals(
     return await find_hospitals(city=city, state=state, emergency_only=emergency_only, user_lat=lat, user_lng=lng)
 
 
+@router.get("/favorites")
+async def get_favorite_doctors(current_user: dict = Depends(get_current_user)):
+    favs = current_user.get("favorite_doctors", [])
+    return {"favorite_doctors": favs}
+
+
 @router.post("/favorites/{doctor_id}")
 async def save_favorite_doctor(doctor_id: str, current_user: dict = Depends(get_current_user)):
+    user_id = current_user["_id"]
+    query = {"_id": ObjectId(user_id)} if isinstance(user_id, str) and ObjectId.is_valid(user_id) else {"_id": user_id}
     await users_collection.update_one(
-        {"_id": ObjectId(current_user["_id"])},
+        query,
         {"$addToSet": {"favorite_doctors": doctor_id}},
     )
     return {"message": "Doctor saved to favorites."}
@@ -44,8 +52,11 @@ async def save_favorite_doctor(doctor_id: str, current_user: dict = Depends(get_
 
 @router.delete("/favorites/{doctor_id}")
 async def remove_favorite_doctor(doctor_id: str, current_user: dict = Depends(get_current_user)):
+    user_id = current_user["_id"]
+    query = {"_id": ObjectId(user_id)} if isinstance(user_id, str) and ObjectId.is_valid(user_id) else {"_id": user_id}
     await users_collection.update_one(
-        {"_id": ObjectId(current_user["_id"])},
+        query,
         {"$pull": {"favorite_doctors": doctor_id}},
     )
     return {"message": "Doctor removed from favorites."}
+
