@@ -30,3 +30,6 @@ langdetect
 librosa
 soundfile
 easyocr
+httpx
+google-auth
+requests
