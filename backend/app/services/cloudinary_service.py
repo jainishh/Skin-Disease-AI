@@ -38,14 +38,33 @@ def upload_image_bytes(image_bytes: bytes, folder: str = "skin-ai/uploads") -> s
             if result and "secure_url" in result:
                 return result["secure_url"]
         except Exception as e:
-            print(f"Cloudinary upload failed: {e}. Using local disk storage fallback.")
+            print(f"Cloudinary upload failed: {e}. Using fallback.")
 
-    # Local fallback inside workspace static/uploads folder (instant <1ms)
-    BASE_DIR = Path(__file__).resolve().parent.parent.parent
-    local_dir = BASE_DIR / "static" / "uploads"
-    os.makedirs(local_dir, exist_ok=True)
-    filename = f"{uuid.uuid4().hex}.jpg"
-    path = os.path.join(local_dir, filename)
-    with open(path, "wb") as f:
-        f.write(image_bytes)
-    return f"{settings.backend_url}/static/uploads/{filename}"
+    # Local disk backup inside static/uploads folder
+    try:
+        BASE_DIR = Path(__file__).resolve().parent.parent.parent
+        local_dir = BASE_DIR / "static" / "uploads"
+        os.makedirs(local_dir, exist_ok=True)
+        filename = f"{uuid.uuid4().hex}.jpg"
+        path = os.path.join(local_dir, filename)
+        with open(path, "wb") as f:
+            f.write(image_bytes)
+    except Exception as e:
+        print(f"Local disk write warning: {e}")
+
+    # Base64 Data URI fallback: ensures scanned images render globally across BOTH local and deployed (Vercel/Render) sites
+    try:
+        import base64
+        import io
+        from PIL import Image
+
+        img = Image.open(io.BytesIO(image_bytes))
+        img.thumbnail((512, 512))
+        buf = io.BytesIO()
+        img.convert("RGB").save(buf, format="JPEG", quality=75)
+        encoded = base64.b64encode(buf.getvalue()).decode("utf-8")
+        return f"data:image/jpeg;base64,{encoded}"
+    except Exception as e:
+        print(f"Data URI generation failed: {e}")
+        return f"{settings.backend_url}/static/uploads/{filename}"
+
