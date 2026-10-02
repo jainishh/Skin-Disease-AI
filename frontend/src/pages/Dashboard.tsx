@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
 import SeverityBadge from "../components/SeverityBadge";
-import { apiClient } from "../api/client";
+import { apiClient, getValidImageUrl } from "../api/client";
 import { Doctor } from "../types";
 import { 
   Home, 
@@ -658,7 +658,14 @@ export default function Dashboard() {
                             className="flex items-center justify-between p-3 rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-surface-elevated)] hover:border-[var(--brand-primary)] hover:bg-[var(--brand-surface)] transition-all w-full shadow-xs"
                           >
                             <div className="flex items-center gap-3">
-                              <img src={item.image_url} alt="" className="h-10 w-10 rounded-xl object-cover bg-[var(--brand-surface)] border border-[var(--brand-border)]" />
+                              <img
+                                src={getValidImageUrl(item.image_url)}
+                                alt=""
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>';
+                                }}
+                                className="h-10 w-10 rounded-xl object-cover bg-[var(--brand-surface)] border border-[var(--brand-border)]"
+                              />
                               <div className="text-left">
                                 <h4 className="font-semibold text-[var(--brand-text)] text-xs leading-snug truncate max-w-[130px]">
                                   {t(`diseases.${item.primary_disease}`, { defaultValue: item.primary_disease_title || item.primary_disease.replace(/_/g, " ") })}
@@ -818,7 +825,14 @@ export default function Dashboard() {
                             {/* Timeline Card */}
                             <div className="rounded-3xl border-2 border-[var(--brand-border)] bg-[var(--brand-surface)] p-5 shadow-xs hover:shadow-md hover:border-[var(--brand-primary)] transition-all duration-300 flex flex-col xl:flex-row xl:items-center justify-between gap-5">
                               <div className="flex items-start gap-4">
-                                <img src={item.image_url} alt="" className="h-16 w-16 rounded-2xl object-cover bg-[var(--brand-surface-elevated)] border border-[var(--brand-border)] shrink-0" />
+                                <img
+                                  src={getValidImageUrl(item.image_url)}
+                                  alt=""
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="%2310b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>';
+                                  }}
+                                  className="h-16 w-16 rounded-2xl object-cover bg-[var(--brand-surface-elevated)] border border-[var(--brand-border)] shrink-0"
+                                />
                                 <div className="space-y-1">
                                   <div className="flex items-center gap-2 flex-wrap">
                                     <h3 className="font-bold text-[var(--brand-text)] text-sm">

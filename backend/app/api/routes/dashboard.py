@@ -10,6 +10,7 @@ from collections import Counter
 from fastapi import APIRouter, Depends
 
 from app.api.deps import get_current_user, require_admin
+from app.core.config import settings
 from app.db.mongodb import predictions_collection, users_collection
 from app.services.ml_service import CLASS_MAPPING, DISPLAY_TITLES
 
@@ -28,6 +29,15 @@ async def prediction_history(current_user: dict = Depends(get_current_user)):
         doc["primary_disease"] = clean_disease
         doc["primary_disease_title"] = doc.get("primary_disease_title") or DISPLAY_TITLES.get(clean_disease, clean_disease)
         
+        # Normalize localhost URLs if backend_url is customized for deployment
+        if settings.backend_url and not ("localhost" in settings.backend_url or "127.0.0.1" in settings.backend_url):
+            backend_base = settings.backend_url.rstrip("/")
+            for url_field in ["image_url", "gradcam_url"]:
+                val = doc.get(url_field)
+                if val and isinstance(val, str) and ("localhost" in val or "127.0.0.1" in val):
+                    import re
+                    doc[url_field] = re.sub(r"^https?://(localhost|127\.0\.0\.1):8000", backend_base, val)
+
         created_at = doc.get("created_at")
         if isinstance(created_at, datetime):
             doc["created_at"] = created_at.isoformat()

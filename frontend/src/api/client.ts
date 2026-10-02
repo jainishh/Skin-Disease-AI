@@ -25,3 +25,14 @@ apiClient.interceptors.response.use(
   }
 );
 
+const BACKEND_BASE_URL = API_BASE_URL.replace(/\/api\/?$/, "");
+
+export function getValidImageUrl(url?: string): string {
+  if (!url) return "";
+  if (url.startsWith("http://localhost:8000") || url.startsWith("http://127.0.0.1:8000")) {
+    return url.replace(/^https?:\/\/(localhost|127\.0\.0\.1):8000/, BACKEND_BASE_URL);
+  }
+  return url;
+}
+
+

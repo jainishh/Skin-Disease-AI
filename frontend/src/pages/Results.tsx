@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Download, AlertTriangle, Volume2, ArrowLeft, Heart, Sparkles, MapPin, VolumeX, Leaf, Star, Mail, Check, Shield } from "lucide-react";
 import ConfidenceChart from "../components/ConfidenceChart";
 import SeverityBadge from "../components/SeverityBadge";
-import { apiClient } from "../api/client";
+import { apiClient, getValidImageUrl } from "../api/client";
 import { PredictionResult, Recommendation } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -314,14 +314,14 @@ export default function Results() {
           <div className="relative mt-4 h-64 w-full overflow-hidden rounded-2xl border border-slate-100 dark:border-[#334155] bg-slate-50 dark:bg-[#0B1220] shadow-inner flex items-center justify-center">
             {result.image_url && (
               <img
-                src={result.image_url}
+                src={getValidImageUrl(result.image_url)}
                 alt="Original skin scan"
                 className="absolute inset-0 h-full w-full object-cover"
               />
             )}
             {result.gradcam_image_url && (
               <img
-                src={result.gradcam_image_url}
+                src={getValidImageUrl(result.gradcam_image_url)}
                 alt="Grad-CAM analysis overlay"
                 style={{ opacity: blendOpacity / 100 }}
                 className="absolute inset-0 h-full w-full object-cover mix-blend-multiply transition-opacity duration-75"
