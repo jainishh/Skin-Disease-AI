@@ -6,7 +6,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.api.deps import get_current_user
+from app.api.deps import get_current_user_optional
 from app.schemas.prediction import RecommendationResponse
 from app.services.recommendation_engine import get_recommendations
 from app.services.translator import translate_recommendation
@@ -27,7 +27,7 @@ async def disease_info(disease_name: str):
 
 
 @router.get("/{disease_name}/{severity}", response_model=RecommendationResponse)
-async def recommendations(disease_name: str, severity: str, lang: str = "en", _user: dict = Depends(get_current_user)):
+async def recommendations(disease_name: str, severity: str, lang: str = "en", _user: dict | None = Depends(get_current_user_optional)):
     if disease_name not in DISEASE_INFO:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Unknown disease.")
     if severity not in {"Mild", "Moderate", "Severe"}:
@@ -35,3 +35,4 @@ async def recommendations(disease_name: str, severity: str, lang: str = "en", _u
     
     rec = get_recommendations(disease_name, severity)
     return translate_recommendation(rec, lang)
+

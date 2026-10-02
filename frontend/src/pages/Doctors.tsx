@@ -75,8 +75,9 @@ export default function Doctors() {
   }, []);
 
   useEffect(() => {
-    // Sync favorites from backend if logged in, fallback to account-scoped localStorage
-    if (user?.id) {
+    // Sync favorites from backend if logged in with valid token, fallback to account-scoped localStorage
+    const token = localStorage.getItem("access_token");
+    if (user?.id && token) {
       apiClient.get<{ favorite_doctors: string[] }>("/doctors/favorites")
         .then((res) => {
           const ids = res.data.favorite_doctors || [];

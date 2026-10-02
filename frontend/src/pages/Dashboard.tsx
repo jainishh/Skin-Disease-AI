@@ -270,12 +270,20 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    // Fetch History
-    apiClient
-      .get<HistoryItem[]>("/dashboard/history")
-      .then((res) => setHistory(res.data))
-      .catch((err) => console.error("Error fetching history:", err))
-      .finally(() => setLoading(false));
+    const token = localStorage.getItem("access_token");
+
+    // Fetch History if logged in with valid token
+    if (user?.id && token) {
+      setLoading(true);
+      apiClient
+        .get<HistoryItem[]>("/dashboard/history")
+        .then((res) => setHistory(res.data))
+        .catch((err) => console.error("Error fetching history:", err))
+        .finally(() => setLoading(false));
+    } else {
+      setHistory([]);
+      setLoading(false);
+    }
 
     // Fetch local appointments (account-scoped)
     const appts = localStorage.getItem(apptKey);
@@ -298,8 +306,8 @@ export default function Dashboard() {
       }).catch((err) => console.error("Error fetching doctors:", err));
     };
 
-    // Sync favorite doctors from backend if logged in, else account-scoped localStorage
-    if (user?.id) {
+    // Sync favorite doctors from backend if logged in with valid token, else account-scoped localStorage
+    if (user?.id && token) {
       apiClient.get<{ favorite_doctors: string[] }>("/doctors/favorites")
         .then((res) => {
           const ids = res.data.favorite_doctors || [];

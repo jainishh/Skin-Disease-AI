@@ -50,6 +50,7 @@ async def predict(
         "gradcam_url": gradcam_url,
         "top_predictions": result["top_predictions"],
         "primary_disease": result["primary_disease"],
+        "primary_disease_title": result.get("primary_disease_title", result["primary_disease"]),
         "confidence": result["confidence"],
         "severity": result["severity"],
         "inference_mode": result["inference_mode"],
@@ -72,10 +73,9 @@ async def predict(
 
 
 @router.get("/{prediction_id}", response_model=PredictionResponse)
-async def get_prediction(prediction_id: str, current_user: dict = Depends(get_current_user)):
-    doc = await predictions_collection.find_one({
-        "_id": ObjectId(prediction_id), "user_id": str(current_user["_id"]),
-    })
+async def get_prediction(prediction_id: str, current_user: dict | None = Depends(get_current_user_optional)):
+    oid = ObjectId(prediction_id) if ObjectId.is_valid(prediction_id) else prediction_id
+    doc = await predictions_collection.find_one({"_id": oid})
     if not doc:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Prediction not found.")
 

@@ -25,11 +25,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const res = await apiClient.get<User>("/auth/me");
           setUser(res.data);
           localStorage.setItem("skin_ai_user", JSON.stringify(res.data));
-        } catch (e) {
+        } catch (e: any) {
           console.error("Failed to load authenticated user", e);
-          const cached = localStorage.getItem("skin_ai_user");
-          if (cached) setUser(JSON.parse(cached));
+          if (e?.response?.status === 401) {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("skin_ai_token");
+            localStorage.removeItem("skin_ai_user");
+            setUser(null);
+          } else {
+            const cached = localStorage.getItem("skin_ai_user");
+            if (cached) setUser(JSON.parse(cached));
+          }
         }
+      } else {
+        setUser(null);
       }
       setLoading(false);
     }

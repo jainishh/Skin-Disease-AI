@@ -129,11 +129,8 @@ class LocalJSONCollection:
             self.data = []
 
     def _save_data(self):
-        try:
-            with open(self.file_path, "w", encoding="utf-8") as f:
-                json.dump(self.data, f, indent=2, cls=JSONEncoder)
-        except Exception as e:
-            print(f"Error saving mock database for {self.name}: {e}")
+        # Do not generate or overwrite local .json files in app/db
+        pass
 
     async def find_one(self, filter, projection=None):
         self._load_data()

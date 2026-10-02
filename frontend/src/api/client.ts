@@ -10,5 +10,18 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// NOTE: for production, prefer storing tokens in an httpOnly cookie set by
-// the backend rather than localStorage, to reduce XSS token-theft risk.
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        console.warn("401 Unauthorized detected - clearing invalid access token.");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("skin_ai_token");
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
