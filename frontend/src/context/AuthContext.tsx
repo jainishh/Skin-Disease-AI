@@ -61,17 +61,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("skin_ai_user", JSON.stringify(meRes.data));
       return meRes.data;
     } catch (err: any) {
-      // Fallback local session if backend fails
-      const mockUser: User = {
-        id: "usr_" + Math.random().toString(36).substr(2, 9),
-        full_name: email.split("@")[0] || "Patient User",
-        email: email,
-        role: "patient",
-        preferred_language: "en",
-        is_verified: true,
-      };
-      setUser(mockUser);
-      localStorage.setItem("skin_ai_user", JSON.stringify(mockUser));
+      // Fallback local session only if backend server is offline (network error)
+      if (!err.response) {
+        const mockUser: User = {
+          id: "usr_" + Math.random().toString(36).substr(2, 9),
+          full_name: email.split("@")[0] || "Patient User",
+          email: email,
+          role: "patient",
+          preferred_language: "en",
+          is_verified: true,
+        };
+        setUser(mockUser);
+        localStorage.setItem("skin_ai_user", JSON.stringify(mockUser));
+      }
       throw err;
     }
   }

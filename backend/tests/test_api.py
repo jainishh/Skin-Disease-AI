@@ -59,6 +59,11 @@ async def test_auth_and_user_flows():
     user_data = response.json()
     assert user_data["email"] == TEST_USER_EMAIL
 
+    # 2.5 Test non-existent email login
+    non_existent_response = client.post("/api/auth/login", json={"email": "notexists@example.com", "password": "password123"})
+    assert non_existent_response.status_code == 404
+    assert non_existent_response.json()["detail"] == "This email does not exist. Please complete the registration process first."
+
     # 3. Test Login
     login_payload = {
         "email": TEST_ADMIN_EMAIL,

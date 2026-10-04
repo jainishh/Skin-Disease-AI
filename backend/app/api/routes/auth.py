@@ -115,7 +115,10 @@ async def login(payload: LoginRequest):
     email_lower = payload.email.lower().strip()
     user = await users_collection.find_one({"email": email_lower})
     if not user:
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Incorrect email or password.")
+        raise HTTPException(
+            status.HTTP_404_NOT_FOUND,
+            "This email does not exist. Please complete the registration process first.",
+        )
 
     hashed_password = user.get("hashed_password")
     if not hashed_password and user.get("auth_provider") == "google":

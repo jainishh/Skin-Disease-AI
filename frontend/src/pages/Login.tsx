@@ -28,8 +28,8 @@ export default function Login() {
       } else {
         navigate("/dashboard");
       }
-    } catch {
-      setError(t("auth.login_error"));
+    } catch (err: any) {
+      setError(err?.response?.data?.detail || t("auth.login_error"));
     } finally {
       setSubmitting(false);
     }
